@@ -27,5 +27,5 @@ JSE, MySQL, Maven, Git, Spring, SpringMVC, , Mybatis，Mybatis Plus, SpringBoot,
 
 ## 联系我
 
-- **Email**: [chaos_ljc@whut.edu.cn](mailto:chaos_ljc@whut.edu.cn) 
+- **Email**: [chaos_ljc@whut.edu.cn](mailto:chaos_ljc@whut.edu.cn)
 - **QQ**: $\text{22??????77} \times 998244353\bmod (10^9+7)=531488816$
