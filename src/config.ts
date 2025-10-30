@@ -17,8 +17,8 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "https://img-chaos.oss-cn-beijing.aliyuncs.com/304a2579-cdf0-47dc-8059-30f0da380f5a.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
+		src: "assets/images/banner.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		position: "bottom", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: false, // Display the credit text of the banner image
 			text: "", // Credit text to be displayed
