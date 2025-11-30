@@ -1,6 +1,6 @@
 ---
 title: The Art of Naming the Variable Names
-published: 2025-10-29
+published: 2024-01-29
 description: '作为入门者所了解的变量命名'
 image: ''
 tags: [入门, 变量名, 编程, C]
