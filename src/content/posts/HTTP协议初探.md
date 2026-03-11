@@ -1,6 +1,6 @@
 ---
 title: HTTP协议初探
-published: 2024-11-26
+published: 2025-01-26
 description: 'HTTP概念、发展与应用'
 image: ''
 tags: ["HTTP","网络","前端"]
