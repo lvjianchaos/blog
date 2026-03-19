@@ -53,7 +53,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar: "https://cdn.jsdelivr.net/gh/lvjianchaos/Images/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Chaos",
 	bio: "人世几回伤往事，山形依旧枕寒流。",
 	links: [

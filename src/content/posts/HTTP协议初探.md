@@ -261,7 +261,7 @@ So,Why is it **BAD**?
 #### 报文
 
 以 ==HTTP/1.1== 为例
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/HTTP_1.1.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/HTTP_1.1.png)
 
 ##### 请求方法 Method
 
@@ -506,13 +506,13 @@ RESTful API（Representational State Transfer,表现层状态转化 API）是一
 ###### 核心概念
 
 1. 资源（Resource）
-  
+
 - **资源**是 RESTful API 的核心概念，表示系统中的任何对象或数据。资源可以是用户、订单、产品、文章等。
 
 - 每个资源都有一个**唯一的标识符（URI）**，用于在系统中唯一标识该资源。
 
 2. 统一接口（Uniform Interface）
-  
+
 - **统一接口**是指 RESTful API 使用标准的 HTTP 方法来操作资源。常见的 HTTP 方法包括：
   - **GET**：获取资源。
 
@@ -525,13 +525,13 @@ RESTful API（Representational State Transfer,表现层状态转化 API）是一
 - 通过统一接口，客户端可以使用相同的接口来访问和操作不同的资源，简化了 API 的设计和使用。
 
 3. 状态转移（State Transfer）
-  
+
 - **状态转移**是指客户端和服务器之间的交互过程中，资源的状态会发生变化。RESTful API <u>通过 HTTP 方法来实现状态转移</u>。
 
 - 例如，客户端发送一个 POST 请求来创建一个新资源，服务器接收到请求后，资源的状态从“不存在”变为“存在”。
 
 4. 无状态（Stateless）
-  
+
 - **无状态**是指服务器不会保存客户端的请求状态。每个请求都是独立的，服务器不会记住之前的请求。
 
 - 这种设计简化了服务器的设计和实现，但也带来了一些问题，如需要通过其他方式（如 Cookie、Session）来维护客户端状态。
@@ -558,11 +558,11 @@ RESTful API（Representational State Transfer,表现层状态转化 API）是一
 - 每个资源都有一个唯一的 URI，用于在系统中唯一标识该资源。例如，`/users/123` 表示 ID 为 123 的用户资源。
 
 4. 使用 JSON 或 XML 表示资源
-  
+
 - 资源通常使用 JSON 或 XML 格式表示，便于客户端和服务器之间的数据交换。
 
 5. 使用状态码表示请求结果
-  
+
 - 使用标准的 HTTP 状态码表示请求的结果，如 200 OK、404 Not Found、500 Internal Server Error 等。
 
 ###### 示例
@@ -1070,7 +1070,7 @@ HTTP 缓存（HTTP Caching）是一种用于减少网络请求和提高网站性
 
 ###### HTTP 缓存的工作流程
 
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E7%BC%93%E5%AD%98_%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E7%BC%93%E5%AD%98_%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B.png)
 
 1. 强缓存的工作流程
 
@@ -1282,7 +1282,7 @@ HTTPS 的握手过程包括以下几个步骤：
 9. **客户端发送 Finished**：客户端发送 Finished 消息，使用会话密钥加密，表示握手过程完成。
 
 10. **服务器发送 Finished**：服务器发送 Finished 消息，使用会话密钥加密，表示握手过程完成。
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/HTTPS.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/HTTPS.png)
 
 ##### HTTPS 的优点
 
@@ -1369,14 +1369,14 @@ Content-Length: 1234
 ### 静态资源
 
 第一次进入页面：
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_index.css.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_index.css.png)
 
 刷新一次后：
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_index.css2.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_index.css2.png)
 此时，状态码200一定发起了请求（指 client请求—server响应 的完整过程）吗？
 （来自磁盘缓存）=》这次的请求是从**本地缓存**拿到的
 观察**缓存策略**：
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_index.css_%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_index.css_%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5.png)
 Cache-Control: max-age=2592000
 
 - 强缓存
@@ -1406,16 +1406,16 @@ Cache-Control: max-age=2592000
 
 - 账号密码登录
 - 打开控制台 - network - 勾选 preserve log - 过滤quick_login
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_%E7%99%BB%E5%BD%95.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E4%BB%8A%E6%97%A5%E5%A4%B4%E6%9D%A1_%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90_%E7%99%BB%E5%BD%95.png)
 观察请求，这两个有什么区别呢？
 最大的区别：Method不同
 第一个请求：
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E7%99%BB%E5%BD%95%E8%AF%B7%E6%B1%821.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E7%99%BB%E5%BD%95%E8%AF%B7%E6%B1%821.png)
 **发起的是：OPTIONS请求，为什么呢？**
 - **跨域， cross-origin**
 **什么是跨域？**
 一个域名由：scheme+host name+port 组成，只要是不同的话，我们都认为是跨域。
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E8%B7%A8%E5%9F%9F%E8%BE%A8%E6%9E%90.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E8%B7%A8%E5%9F%9F%E8%BE%A8%E6%9E%90.png)
 一般来说，
  *- https 默认使用端口号 443
   - http 默认使用端口号 80*
@@ -1435,18 +1435,18 @@ Cache-Control: max-age=2592000
   - Access-Control-Request-Method
   - Access-Control-Request-Headers
   - Origin
- ![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E8%B7%A8%E5%9F%9F%E7%A4%BA%E6%84%8F%E5%9B%BE.png)
+   ![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E8%B7%A8%E5%9F%9F%E7%A4%BA%E6%84%8F%E5%9B%BE.png)
 
 **跨域解决方案**
 
 - CORS
 - 代理服务器
   - 同源策略是浏览器的安全策略，不是HTTP
-  - ![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
+  - ![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8.png)
 - Iframe通信
   - 限制较多，诸多不便
 
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/%E7%99%BB%E5%BD%95_%E5%85%B7%E4%BD%93%E9%97%AE%E9%A2%98.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/%E7%99%BB%E5%BD%95_%E5%85%B7%E4%BD%93%E9%97%AE%E9%A2%98.png)
 
 1. 想什么地址做了什么动作？
 
@@ -1469,15 +1469,15 @@ Cache-Control: max-age=2592000
 鉴权
 
 - Session + cookie
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/Session%2BCookie.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/Session%2BCookie.png)
 - JWT(JSON web token)
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/JWT.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/JWT.png)
 各自的优劣，和应用场景
 
 **点击右上角发文章，跳转后的网站为什么自动登录？**
 
 SSO：单点登录（Single Sign On）
-![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP%E5%8D%8F%E8%AE%AE/SSO%E7%A4%BA%E6%84%8F%E5%9B%BE.png)
+![](https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/HTTP/SSO%E7%A4%BA%E6%84%8F%E5%9B%BE.png)
 
 ---
 
