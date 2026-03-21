@@ -1,5 +1,6 @@
 import type {
 	ExpressiveCodeConfig,
+	GiscusConfig,
 	LicenseConfig,
 	NavBarConfig,
 	ProfileConfig,
@@ -86,4 +87,20 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	codeFold: {
 		minLines: 12,
 	},
+};
+
+export const giscusConfig: GiscusConfig = {
+	enable: true,
+	showTitle: true,
+	repo: "lvjianchaos/blog",
+	repoId: "R_kgDOQLfrkg",
+	category: "Blog Comments",
+	categoryId: "DIC_kwDOQLfrks4C48vl",
+	mapping: "pathname",
+	strict: "0",
+	reactionsEnabled: "1",
+	emitMetadata: "0",
+	inputPosition: "top",
+	lang: "zh-CN",
+	loading: "lazy",
 };
