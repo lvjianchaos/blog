@@ -1,23 +1,90 @@
 ---
 import "@fontsource-variable/jetbrains-mono";
 import "@fontsource-variable/jetbrains-mono/wght-italic.css";
+import { expressiveCodeConfig } from "@/config";
 
 interface Props {
 	class: string;
 }
 const className = Astro.props.class;
+const codeFoldMinLines = expressiveCodeConfig.codeFold?.minLines ?? 12;
 ---
-<div data-pagefind-body class={`prose dark:prose-invert prose-base !max-w-none custom-md ${className}`}>
+<div data-pagefind-body data-code-fold-min-lines={codeFoldMinLines} class={`prose dark:prose-invert prose-base !max-w-none custom-md ${className}`}>
     <!--<div class="prose dark:prose-invert max-w-none custom-md">-->
     <!--<div class="max-w-none custom-md">-->
     <slot/>
 </div>
 
 <script>
+function initCodeFold() {
+    const wrappers = document.querySelectorAll(".custom-md[data-code-fold-min-lines]");
+
+    wrappers.forEach((wrapper) => {
+        const minLines = Number((wrapper as HTMLElement).dataset.codeFoldMinLines ?? "12");
+        const codeBlocks = wrapper.querySelectorAll(".expressive-code pre");
+
+        codeBlocks.forEach((pre) => {
+            if ((pre as HTMLElement).dataset.codeFoldInited === "true") return;
+
+            const lines = Array.from(pre.querySelectorAll("code .ec-line:not(summary .ec-line)"));
+            if (lines.length <= minLines) {
+                (pre as HTMLElement).dataset.codeFoldInited = "true";
+                return;
+            }
+
+            pre.classList.add("has-code-fold-toggle", "is-collapsed");
+            (pre as HTMLElement).dataset.codeFoldMinLines = String(minLines);
+            (pre as HTMLElement).dataset.codeFoldTotalLines = String(lines.length);
+
+            lines.forEach((line, index) => {
+                if (index >= minLines) {
+                    (line as HTMLElement).setAttribute("data-fold-hidden", "true");
+                }
+            });
+
+            if (!pre.querySelector(".code-fold-toggle")) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "code-fold-toggle";
+                button.setAttribute("aria-label", "Show more code");
+                button.setAttribute("aria-expanded", "false");
+                button.innerHTML = `
+                    <span class="fold-more fold-icon" aria-hidden="true">
+                        <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="m480-360-240-240 56-56 184 184 184-184 56 56-240 240Z"></path></svg>
+                    </span>
+                    <span class="fold-less fold-icon" aria-hidden="true">
+                        <svg viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path d="m240-400 240-240 240 240-56 56-184-184-184 184-56-56Z"></path></svg>
+                    </span>
+                `;
+                pre.appendChild(button);
+            }
+
+            (pre as HTMLElement).dataset.codeFoldInited = "true";
+        });
+    });
+}
+
+initCodeFold();
+document.addEventListener("astro:page-load", initCodeFold);
+document.addEventListener("swup:contentReplaced", initCodeFold);
+
 document.addEventListener("click", function (e: MouseEvent) {
     const target = e.target as Element | null;
-    if (target && target.classList.contains("copy-btn")) {
-        const preEle = target.closest("pre");
+
+    const foldButton = target?.closest(".code-fold-toggle") as HTMLButtonElement | null;
+    if (foldButton) {
+        const preEle = foldButton.closest("pre");
+        if (!preEle) return;
+
+        const isCollapsed = preEle.classList.toggle("is-collapsed");
+        foldButton.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+        foldButton.setAttribute("aria-label", isCollapsed ? "Show more code" : "Collapse code");
+        return;
+    }
+
+    const copyButton = target?.closest(".copy-btn") as HTMLElement | null;
+    if (copyButton) {
+        const preEle = copyButton.closest("pre");
         const codeEle = preEle?.querySelector("code");
         const code = Array.from(codeEle?.querySelectorAll(".code:not(summary *)") ?? [])
             .map(el => el.textContent)
@@ -25,19 +92,19 @@ document.addEventListener("click", function (e: MouseEvent) {
             .join("\n");
         navigator.clipboard.writeText(code);
 
-        const timeoutId = target.getAttribute("data-timeout-id");
+        const timeoutId = copyButton.getAttribute("data-timeout-id");
         if (timeoutId) {
             clearTimeout(parseInt(timeoutId));
         }
 
-        target.classList.add("success");
+        copyButton.classList.add("success");
 
         // 设置新的timeout并保存ID到按钮的自定义属性中
         const newTimeoutId = setTimeout(() => {
-            target.classList.remove("success");
+            copyButton.classList.remove("success");
         }, 1000);
 
-        target.setAttribute("data-timeout-id", newTimeoutId.toString());
+        copyButton.setAttribute("data-timeout-id", newTimeoutId.toString());
     }
 });
 </script>

@@ -3,7 +3,12 @@
         @apply text-3xl;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         .anchor {
             @apply transition -m-0.5 ml-[0.2ch] p-0.5 select-none opacity-0 no-underline !important;
 
@@ -20,13 +25,13 @@
     }
 
     a:not(.no-styling) {
-        @apply relative bg-none link font-medium text-[var(--primary)]
-        underline decoration-[var(--link-underline)] decoration-1 decoration-dashed underline-offset-4;
+        @apply relative bg-none link font-medium text-[var(--primary)] underline decoration-[var(--link-underline)] decoration-1 decoration-dashed underline-offset-4;
         box-decoration-break: clone;
         -webkit-box-decoration-break: clone;
         display: inline-block;
-    
-        &:hover, &:active {
+
+        &:hover,
+        &:active {
             @apply decoration-transparent;
             background: var(--btn-plain-bg-hover);
             border-bottom: 1px dashed var(--link-hover);
@@ -38,14 +43,17 @@
         @apply bg-[var(--inline-code-bg)] text-[var(--inline-code-color)] px-1 py-0.5 rounded-md overflow-hidden;
 
         font-family: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+
         &:before {
-            content:none;
+            content: none;
         }
+
         &:after {
-            content:none;
+            content: none;
         }
 
         counter-reset: line;
+
         span.line {
             &:before {
                 @apply text-white/25 mr-4 w-4 inline-block;
@@ -53,7 +61,9 @@
                 counter-increment: line;
                 direction: rtl;
             }
-            &:last-child:empty, &:last-child:has(> span:empty:only-child) {
+
+            &:last-child:empty,
+            &:last-child:has(> span:empty:only-child) {
                 display: none;
             }
         }
@@ -63,6 +73,7 @@
         all: initial;
         @apply btn-regular-dark opacity-0 shadow-lg shadow-black/50 absolute active:scale-90 h-8 w-8 top-3 right-3 text-sm rounded-lg transition-all ease-in-out z-20 cursor-pointer;
     }
+
     .frame:hover .copy-btn {
         opacity: 1;
     }
@@ -70,28 +81,92 @@
     .copy-btn-icon {
         @apply absolute top-1/2 left-1/2 transition -translate-x-1/2 -translate-y-1/2 w-4 h-4 fill-white pointer-events-none;
     }
+
     .copy-btn .copy-icon {
         @apply opacity-100 fill-white dark:fill-white/75;
     }
+
     .copy-btn.success .copy-icon {
         @apply opacity-0 fill-[var(--deep-text)]
     }
+
     .copy-btn .success-icon {
         @apply opacity-0 fill-white;
     }
+
     .copy-btn.success .success-icon {
         @apply opacity-100
     }
 
+    pre.has-code-fold-toggle {
+        @apply pb-8;
+    }
+
+    pre.is-collapsed .ec-line[data-fold-hidden] {
+        display: none !important;
+    }
+
+    pre .code-fold-toggle {
+        all: initial;
+        @apply absolute left-0 right-0 bottom-0 h-8 flex items-center justify-center border-t border-white/10 bg-[var(--codeblock-topbar-bg)] cursor-pointer transition-all z-20;
+    }
+
+    pre.is-collapsed .code-fold-toggle::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 100%;
+        height: 4rem;
+        pointer-events: none;
+        background: linear-gradient(to bottom,
+                color-mix(in oklab, var(--codeblock-bg) 20%, transparent) 0%,
+                color-mix(in oklab, var(--codeblock-bg) 92%, transparent) 100%);
+    }
+
+    pre .code-fold-toggle:hover {
+        @apply bg-[var(--btn-regular-bg-hover)];
+    }
+
+    pre .code-fold-toggle:active {
+        @apply bg-[var(--btn-regular-bg-active)];
+    }
+
+    pre .code-fold-toggle .fold-icon {
+        @apply w-5 h-5 text-white/80;
+    }
+
+    pre .code-fold-toggle .fold-icon svg {
+        @apply w-5 h-5 fill-current;
+    }
+
+    pre .code-fold-toggle .fold-less {
+        display: none;
+    }
+
+    pre:not(.is-collapsed) .code-fold-toggle .fold-more {
+        display: none;
+    }
+
+    pre:not(.is-collapsed) .code-fold-toggle .fold-less {
+        display: inline;
+    }
+
+    pre.is-collapsed .code-fold-toggle {
+        @apply opacity-100;
+    }
+
     .expressive-code {
         @apply my-4;
+
         ::selection {
             @apply bg-[var(--codeblock-selection)];
         }
     }
 
 
-    ul, ol {
+    ul,
+    ol {
         li::marker {
             @apply text-[var(--primary)];
         }
@@ -106,7 +181,8 @@
         }
 
         /* Remove the double quotes from default styles */
-        p:before, p:after {
+        p:before,
+        p:after {
             @apply content-none;
         }
 
@@ -117,5 +193,5 @@
         overflow-x: auto;
         margin: 1em 0;
     }
-    
+
 }

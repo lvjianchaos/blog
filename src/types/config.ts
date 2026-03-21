@@ -99,4 +99,7 @@ export type BlogPostData = {
 
 export type ExpressiveCodeConfig = {
 	theme: string;
+	codeFold?: {
+		minLines: number;
+	};
 };

@@ -1,7 +1,53 @@
 import { definePlugin } from "@expressive-code/core";
 import type { Element } from "hast";
 
-export function pluginCustomCopyButton() {
+interface CustomCodeBlockOptions {
+	minLines?: number;
+}
+
+function getClassNames(node: Element): string[] {
+	const className = node.properties?.className;
+	if (Array.isArray(className)) return className.map(String);
+	if (typeof className === "string") return [className];
+	return [];
+}
+
+function hasClassName(node: Element, className: string): boolean {
+	return getClassNames(node).includes(className);
+}
+
+function addClassName(node: Element, className: string) {
+	const classNames = getClassNames(node);
+	if (!classNames.includes(className)) {
+		node.properties = {
+			...(node.properties ?? {}),
+			className: [...classNames, className],
+		};
+	}
+}
+
+function collectLineRows(node: Element, inSummary = false): Element[] {
+	const lines: Element[] = [];
+	const nowInSummary = inSummary || node.tagName === "summary";
+
+	if (hasClassName(node, "ec-line") && !nowInSummary) {
+		lines.push(node);
+	}
+
+	if (node.children) {
+		for (const child of node.children) {
+			if (child.type === "element") {
+				lines.push(...collectLineRows(child, nowInSummary));
+			}
+		}
+	}
+
+	return lines;
+}
+
+export function pluginCustomCopyButton(options: CustomCodeBlockOptions = {}) {
+	const minLines = options.minLines ?? 12;
+
 	return definePlugin({
 		name: "Custom Copy Button",
 		hooks: {
@@ -19,10 +65,104 @@ export function pluginCustomCopyButton() {
 				}
 
 				function processCodeBlock(node: Element) {
+					const codeLines = collectLineRows(node);
+					if (codeLines.length > minLines) {
+						addClassName(node, "has-code-fold-toggle");
+						addClassName(node, "is-collapsed");
+
+						node.properties = {
+							...(node.properties ?? {}),
+							"data-code-fold-min-lines": minLines,
+							"data-code-fold-total-lines": codeLines.length,
+						};
+
+						for (let i = minLines; i < codeLines.length; i++) {
+							codeLines[i].properties = {
+								...(codeLines[i].properties ?? {}),
+								"data-fold-hidden": "true",
+							};
+						}
+
+						const foldButton = {
+							type: "element" as const,
+							tagName: "button",
+							properties: {
+								type: "button",
+								className: ["code-fold-toggle"],
+								"aria-label": "Show more code",
+								"aria-expanded": "false",
+							},
+							children: [
+								{
+									type: "element" as const,
+									tagName: "span",
+									properties: {
+										className: ["fold-more", "fold-icon"],
+									},
+									children: [
+										{
+											type: "element" as const,
+											tagName: "svg",
+											properties: {
+												viewBox: "0 -960 960 960",
+												xmlns: "http://www.w3.org/2000/svg",
+												"aria-hidden": "true",
+											},
+											children: [
+												{
+													type: "element" as const,
+													tagName: "path",
+													properties: {
+														d: "m480-360-240-240 56-56 184 184 184-184 56 56-240 240Z",
+													},
+													children: [],
+												},
+											],
+										},
+									],
+								},
+								{
+									type: "element" as const,
+									tagName: "span",
+									properties: {
+										className: ["fold-less", "fold-icon"],
+									},
+									children: [
+										{
+											type: "element" as const,
+											tagName: "svg",
+											properties: {
+												viewBox: "0 -960 960 960",
+												xmlns: "http://www.w3.org/2000/svg",
+												"aria-hidden": "true",
+											},
+											children: [
+												{
+													type: "element" as const,
+													tagName: "path",
+													properties: {
+														d: "m240-400 240-240 240 240-56 56-184-184-184 184-56-56Z",
+													},
+													children: [],
+												},
+											],
+										},
+									],
+								},
+							],
+						} as Element;
+
+						if (!node.children) {
+							node.children = [];
+						}
+						node.children.push(foldButton);
+					}
+
 					const copyButton = {
 						type: "element" as const,
 						tagName: "button",
 						properties: {
+							type: "button",
 							className: ["copy-btn"],
 							"aria-label": "Copy code",
 						},
