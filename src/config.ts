@@ -82,6 +82,7 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
+	// The minimum number of lines required to enable code folding. Set to 0 to disable code folding.
 	codeFold: {
 		minLines: 12,
 	},
