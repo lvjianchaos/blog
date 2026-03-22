@@ -13,7 +13,7 @@ lang: 'zh-CN'
 观看 [二叉树树](https://space.bilibili.com/325903362) 的视频 [【B站评论惊现诈骗链接！！！这是怎么做的？？？？】](https://www.bilibili.com/video/BV1tCw8zpE21/)  后，想要更深入地了解这个现象，从而有了这期博客。
 :::
 
-## 引言
+## 引言：关于“诈骗链接”
 
 在浏览 `BiliBili` 评论区时，常会发现 B 站的视频链接以标题的形式显现，如下图：
 
@@ -384,7 +384,7 @@ this.disposables.addEventListener(this.contentsElement, "click", function (e) {
 
 在说明为什么 `https://www.bilibili.com/video/BV_X/../BV_Y` 跳转到的是 BV_Y 之前，先来简单了解一下短链接技术。
 
-#### 简述
+### 简述
 
 **短链接**是一种 URL 缩短技术，通过**重定向**将较长的原始链接映射到简短的地址。当用户访问短链接时，服务端返回 **301/302 状态码**，并在 `Location` 响应头中携带真实目标地址，浏览器随即跳转。
 
@@ -405,7 +405,7 @@ https://www.bilibili.com/video/BV12ecbz1EUZ/?spm_id_from=333.999.0.0&vd_source=x
 - **生成时**：你将一个长链接（如 `https://www.example.com/very/long/path?with=many&parameters`）提交给服务，它返回一个短码（如 `abc123`），并在数据库中记录 `短码 -> 长链接` 的映射 。
 - **访问时**：当用户点击 `https://short.url/abc123`，短链接服务器接收到请求，根据 `abc123` 查到对应的长链接，然后向浏览器返回一个 **HTTP 301（永久重定向）或 302（临时重定向）** 响应，其中 `Location` 头部就是那个原始长链接。浏览器收到后，会自动跳转过去。
 
-#### `b23.tv` 短链生成
+### `b23.tv` 短链生成
 
 我们可以通过第三方的 [B站短链接生成工具](https://www.bilitools.top/t/4/) 来使用哔哩哔哩的短码服务，当然也可以通过  [B站的API](https://sessionhu.github.io/bilibili-API-collect/docs/misc/b23tv.html) 生成 b23.tv 短链，这里给出一个脚本代码：
 
@@ -650,7 +650,7 @@ if __name__ == "__main__":
 
 回到诈骗链接的现场：短链跳转到的原始长链明明是类似这样的 `https://www.bilibili.com/video/BV_X/../BV_Y`，我们可以尝试直接在浏览器输入类似这样的网址，会发现路径中的 `/BV_X/..` 消失了，是谁篡改了这个 `URL`—— **URL路径规范化**。
 
-#### 回顾 URL 起源与演进
+### 回顾 URL 起源与演进
 
 1990年，蒂姆·伯纳斯·李在发明万维网时，需要一种方式标识互联网上的资源。他借鉴了当时`Unix`文件系统的路径表示法：
 
@@ -691,7 +691,7 @@ if __name__ == "__main__":
 
   规范化是**防御目录遍历攻击的第一道关卡**。通过解析 `..`，服务器可以判断最终路径是否在Web根目录内。例如，攻击者提交 `../../etc/passwd`，规范化后服务器能检测到[目录遍历](https://en.wikipedia.org/wiki/Directory_traversal_attack)，直接拒绝请求。
 
-#### 规范化
+### 规范化
 
 显而易见的，**规范化的发生**在底层的基础设施，且往往不止一次：
 
@@ -705,7 +705,7 @@ if __name__ == "__main__":
 
 3. …………
 
-##### 核心：`.` 与 `..` 的处理
+#### 核心：`.` 与 `..` 的处理
 
 URL 标准有明确的规范化算法，简化后的逻辑如下：
 
@@ -751,7 +751,7 @@ static void normalize_path(char *path) {
 }
 ```
 
-##### 不止于路径
+#### 不止于路径
 
 值得注意的是，URL规范化远不止处理 `..`。RFC 3986及其实践通常包括以下操作：
 
@@ -778,7 +778,7 @@ console.log(normalized);
 
 ---
 
-## 结尾：回到诈骗链接
+## 结尾：回到“诈骗链接”
 
 现在我们可以完整解释 B 站诈骗链接的机制了：
 
