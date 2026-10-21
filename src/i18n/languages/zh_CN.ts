@@ -33,6 +33,8 @@ export const zh_CN: Translation = {
 	[Key.systemMode]: "跟随系统",
 
 	[Key.more]: "更多",
+	[Key.toc]: "目录",
+	[Key.backToTop]: "回到顶部",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "发布于",

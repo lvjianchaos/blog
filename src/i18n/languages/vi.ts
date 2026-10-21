@@ -33,6 +33,8 @@ export const vi: Translation = {
 	[Key.systemMode]: "Hệ thống",
 
 	[Key.more]: "Thêm",
+	[Key.toc]: "Mục lục",
+	[Key.backToTop]: "Về đầu trang",
 
 	[Key.author]: "Tác giả",
 	[Key.publishedAt]: "Đăng vào lúc",

@@ -33,6 +33,8 @@ export const th: Translation = {
 	[Key.systemMode]: "ตามระบบ",
 
 	[Key.more]: "ดูเพิ่ม",
+	[Key.toc]: "สารบัญ",
+	[Key.backToTop]: "กลับไปด้านบน",
 
 	[Key.author]: "ผู้เขียน",
 	[Key.publishedAt]: "เผยแพร่เมื่อ",

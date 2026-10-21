@@ -33,6 +33,8 @@ export const es: Translation = {
 	[Key.systemMode]: "Sistema",
 
 	[Key.more]: "Más",
+	[Key.toc]: "Índice",
+	[Key.backToTop]: "Volver arriba",
 
 	[Key.author]: "Autor",
 	[Key.publishedAt]: "Publicado el",

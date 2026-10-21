@@ -71,6 +71,8 @@ class TableOfContents extends HTMLElement {
     tocEntries: HTMLAnchorElement[] = [];
     active: boolean[] = [];
     activeIndicator: HTMLElement | null = null;
+    initTimeout: number | undefined;
+    initialized = false;
 
     constructor() {
         super();
@@ -201,15 +203,20 @@ class TableOfContents extends HTMLElement {
     };
 
     connectedCallback() {
-        // wait for the onload animation to finish, which makes the `getBoundingClientRect` return correct values
-        const element = document.querySelector('.prose');
-        if (element) {
-            element.addEventListener('animationend', () => {
-                this.init();
-            }, { once: true });
-        } else {
-            console.debug('Animation element not found');
+        // The entry animation of the article changes element positions, so measure after it finishes.
+        // Note: the animation lives on the `#content-wrapper` ancestor (not on `.prose`), and
+        // swup re-creates this element on every visit, so a timeout fallback is required as well.
+        const animationWrapper = document.getElementById('content-wrapper');
+        if (animationWrapper) {
+            animationWrapper.addEventListener('animationend', () => this.safeInit(), { once: true });
         }
+        this.initTimeout = window.setTimeout(() => this.safeInit(), 600);
+    };
+
+    safeInit() {
+        if (this.initialized) return;
+        this.initialized = true;
+        this.init();
     };
 
     init() {
@@ -254,6 +261,8 @@ class TableOfContents extends HTMLElement {
     };
 
     disconnectedCallback() {
+        window.clearTimeout(this.initTimeout);
+        this.initialized = false;
         this.sections.forEach((section) =>
             this.observer.unobserve(section)
         );

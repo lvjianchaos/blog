@@ -33,6 +33,8 @@ export const en: Translation = {
 	[Key.systemMode]: "System",
 
 	[Key.more]: "More",
+	[Key.toc]: "Contents",
+	[Key.backToTop]: "Back to top",
 
 	[Key.author]: "Author",
 	[Key.publishedAt]: "Published at",
