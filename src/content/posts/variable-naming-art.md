@@ -3,8 +3,8 @@ title: The Art of Naming the Variable Names
 published: 2025-04-29
 description: '作为入门者所了解的变量命名'
 image: ''
-tags: [入门, 变量名, 编程, C]
-category: '笔记'
+tags: [入门, 变量名, 编程, c]
+category: '技术笔记'
 draft: false 
 lang: 'zh_CN'
 ---

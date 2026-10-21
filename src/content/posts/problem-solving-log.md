@@ -3,8 +3,8 @@ title: 刷题日志
 published: 2025-08-30
 description: '刷题日志同步于Github'
 image: ''
-tags: [算法]
-category: '通知'
+tags: [通知]
+category: '算法'
 draft: false 
 lang: 'zh-CN'
 ---

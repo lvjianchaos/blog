@@ -3,8 +3,8 @@ title: HTTP协议初探
 published: 2025-01-26
 description: 'HTTP概念、发展与应用'
 image: ''
-tags: ["HTTP","网络","前端"]
-category: '笔记'
+tags: ["http","网络","前端"]
+category: '技术笔记'
 draft: false 
 lang: 'zh-CN'
 ---

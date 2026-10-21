@@ -4,7 +4,7 @@ published: 2025-10-28
 description: '挡风玻璃上爆开的虫尸，绽放成星云，盛夏正以光年速度向我们袭来……'
 image: ''
 tags: [回忆, 死亡, 小说, 自我]
-category: '碎笔'
+category: '随笔'
 draft: false 
 lang: 'zh_CN'
 ---

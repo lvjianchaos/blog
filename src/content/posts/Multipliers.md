@@ -3,8 +3,8 @@ title: Multipliers
 published: 2024-08-27
 description: ''
 image: ''
-tags: ["质因数分解定理","费马小定理","ACM","算法"]
-category: '算法题解'
+tags: ["codeforces","math","质因数分解定理","费马小定理"]
+category: '算法'
 draft: false
 lang: 'zh-CN'
 ---

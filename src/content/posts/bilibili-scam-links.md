@@ -4,7 +4,7 @@ published: 2026-03-15
 description: ''
 image: ''
 tags: ['bilibili','url','shortlink','bug']
-category: 'CS'
+category: '技术笔记'
 draft: false
 lang: 'zh-CN'
 ---

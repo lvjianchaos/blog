@@ -3,8 +3,8 @@ title: 快速分解素因数
 published: 2024-06-21
 description: '分解质因数入门'
 image: ''
-tags: ["算法","分解质因数","ACM"]
-category: '算法总结'
+tags: ["分解质因数","算法总结"]
+category: '算法'
 draft: false 
 lang: 'zh-CN'
 ---

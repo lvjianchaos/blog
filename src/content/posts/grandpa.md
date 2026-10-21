@@ -3,8 +3,8 @@ title: 姥爷
 published: 2025-10-31
 description: '……像是飞倦了的鸟，落回了巢。那些向外伸展的枝桠，也被时间一根根修剪，最后，只剩下守着根的那份安稳。'
 image: ''
-tags: [回忆, 随笔]
-category: '碎笔'
+tags: [回忆, 散文, 亲人]
+category: '随笔'
 draft: false 
 lang: 'zh-CN'
 ---

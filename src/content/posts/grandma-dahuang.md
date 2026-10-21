@@ -3,8 +3,8 @@ title: 姥娘，大黄。
 published: 2025-10-27
 description: '这些东西，不说出来，就只能烂在心里，跟着人和狗，一起回到土里去。'
 image: ''
-tags: [回忆, 随笔]
-category: '碎笔'
+tags: [回忆, 散文, 亲人]
+category: '随笔'
 draft: false 
 lang: 'zh-CN'
 ---
