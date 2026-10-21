@@ -4,7 +4,7 @@ published: 2025-08-25
 description: '在完全承认自己的动机可能不纯粹、可能被审判、可能失败的前提下，依然选择将那个卡住的文章公开发表'
 image: ''
 tags: ["心理","自白","强迫主体","僵局"]
-category: ''
+category: '随笔'
 draft: false 
 lang: 'zh-CN'
 ---
