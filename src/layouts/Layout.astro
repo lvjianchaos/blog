@@ -437,6 +437,14 @@ const setup = () => {
 	})
 	window.swup.hooks.on('content:replace', initCustomScrollbar)
 
+	// The 404 page is served for any unknown URL, so the target URL is not a reliable
+	// source of truth for the layout (e.g. `/posts/nope/` would look like a post page).
+	// Copy the class from the document that was actually returned instead.
+	window.swup.hooks.on('content:replace', (visit: { to?: { document?: Document } }) => {
+		const incomingBody = visit?.to?.document?.body
+		if (!incomingBody) return
+		document.body.classList.toggle('is-post-page', incomingBody.classList.contains('is-post-page'))
+	})
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')
