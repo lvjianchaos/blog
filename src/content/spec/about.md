@@ -19,10 +19,6 @@
 - 🧠 追求解决算法问题的快感（[Codeforces](https://codeforces.com/), [Atcoder](https://atcoder.jp/) ,[Leetcode](https://leetcode.cn/), etc.）
 - 😄 ACGN爱好者，对历史、诗词、文学、西方哲学感兴趣
 
-:::tip[技术栈]
-JSE, MySQL, Maven, Git, Spring, SpringMVC, , Mybatis，Mybatis Plus, SpringBoot, Redis, HTML, CSS, JS, TS, Vue
-:::
-
 ---
 
 ## 联系我
