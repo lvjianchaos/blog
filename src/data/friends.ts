@@ -34,7 +34,7 @@ export const friends: FriendLink[] = [
 	{
 		name: "Fuwari",
 		url: "https://fuwari.vercel.app/",
-		avatar: "https://avatars.githubusercontent.com/u/104888093?v=4",
+		avatar: "	https://fuwari.vercel.app/_astro/demo-avatar.CxcI0ivM_1nbuVe.webp",
 		description: "本项目使用的 Astro 博客主题。",
 		tags: ["主题", "Astro"],
 	},
