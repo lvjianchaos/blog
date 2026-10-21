@@ -25,6 +25,8 @@ interface Props {
 	lang?: string;
 	image?: string;
 	postLayout?: boolean;
+	noindex?: boolean;
+	noCanonical?: boolean;
 	setOGTypeArticle?: boolean;
 	headings?: MarkdownHeading[];
 }
@@ -36,6 +38,8 @@ const {
 	lang,
 	image,
 	postLayout = false,
+	noindex = false,
+	noCanonical = false,
 	setOGTypeArticle,
 	headings = [],
 } = Astro.props;
@@ -52,7 +56,7 @@ const mainPanelTop = siteConfig.banner.enable
 const usePostLayout = postLayout && siteConfig.toc.enable;
 ---
 
-<Layout title={title} banner={banner} description={description} lang={lang} image={image} postLayout={usePostLayout} setOGTypeArticle={setOGTypeArticle}>
+<Layout title={title} banner={banner} description={description} lang={lang} image={image} postLayout={usePostLayout} noindex={noindex} noCanonical={noCanonical} setOGTypeArticle={setOGTypeArticle}>
 
 <!-- Navbar -->
 <slot slot="head" name="head"></slot>
