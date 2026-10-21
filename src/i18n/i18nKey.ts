@@ -3,6 +3,7 @@ enum I18nKey {
 	about = "about",
 	archive = "archive",
 	search = "search",
+	friends = "friends",
 
 	tags = "tags",
 	categories = "categories",
@@ -13,6 +14,7 @@ enum I18nKey {
 	untitled = "untitled",
 	uncategorized = "uncategorized",
 	noTags = "noTags",
+	noFriends = "noFriends",
 
 	wordCount = "wordCount",
 	wordsCount = "wordsCount",

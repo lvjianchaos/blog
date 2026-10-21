@@ -5,6 +5,7 @@ export const zh_CN: Translation = {
 	[Key.home]: "主页",
 	[Key.about]: "关于",
 	[Key.archive]: "归档",
+	[Key.friends]: "友链",
 	[Key.search]: "搜索",
 
 	[Key.tags]: "标签",
@@ -16,6 +17,7 @@ export const zh_CN: Translation = {
 	[Key.untitled]: "无标题",
 	[Key.uncategorized]: "未分类",
 	[Key.noTags]: "无标签",
+	[Key.noFriends]: "暂无友链",
 
 	[Key.wordCount]: "字",
 	[Key.wordsCount]: "字",

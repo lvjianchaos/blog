@@ -5,6 +5,7 @@ export const tr: Translation = {
 	[Key.home]: "Anasayfa",
 	[Key.about]: "Hakkında",
 	[Key.archive]: "Arşiv",
+	[Key.friends]: "Arkadaşlar",
 	[Key.search]: "Ara",
 
 	[Key.tags]: "Taglar",
@@ -16,6 +17,7 @@ export const tr: Translation = {
 	[Key.untitled]: "Başlıksız",
 	[Key.uncategorized]: "Katagorisiz",
 	[Key.noTags]: "Tag Bulunamadı",
+	[Key.noFriends]: "Henüz arkadaş yok",
 
 	[Key.wordCount]: "kelime",
 	[Key.wordsCount]: "kelime",
