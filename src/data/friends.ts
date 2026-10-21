@@ -26,8 +26,7 @@ export const friends: FriendLink[] = [
 	{
 		name: "Songxuan",
 		url: "https://blog.songtf.cn/",
-		avatar:
-			"https://raw.githubusercontent.com/Song-xuan-xuan/picgo-mac/main/img/avatar.png",
+		avatar: "https://raw.githubusercontent.com/Song-xuan-xuan/picgo-mac/main/img/avatar.png",
 		description: "技术、生活、随笔，一个一直在更新的个人博客。",
 		tags: ["博客", "技术", "同学"],
 	},
