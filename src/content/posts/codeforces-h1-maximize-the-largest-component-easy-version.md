@@ -1,0 +1,206 @@
+---
+title: "H1. Maximize the Largest Component (Easy Version)"
+published: 2024-08-12
+description: ''
+image: ''
+tags: ["codeforces", "DFS", "暴力", "模拟"]
+category: '算法'
+draft: false
+lang: 'zh-CN'
+---
+**比赛场次**
+
+**比赛题目**
+
+<!--more-->
+
+2 seconds / 512 megabytes
+
+standard input / standard output
+
+## 题目
+
+给定一n行，m列的网格，由 `#`
+和`.`组成。你可以将任意一行或一列变为`#`1次，使网格中相连通的`#`最多。
+
+## 输入
+
+第一个包含一个整数 t（1 <= t <= 1e4） -  测试用例的数量。
+每个测试用例第一行包含两个整数n，m ( 1 <= n * m <= 1e6 ) - 网格的行数和列数。
+接下来 n 行米欸行包含m个字符，每个字符均为`#`或`.`。
+保证测试用例中的 n * m 总和不大于 1e6。
+
+## 输出
+
+对于每个测试用例，输出一个整数，即所能达到的由 "#" 个单元组成的连接组件的最大可能大小。
+
+## 样例
+
+**输入**
+
+> 6
+> 1 1
+> .
+> 4 2
+> ..
+> #.
+> #.
+> .#
+> 3 5
+> .#.#.
+> ..#..
+> .#.#.
+> 5 5
+> #...#
+> ....#
+> #...#
+> .....
+> ...##
+> 6 6
+> .#..#.
+> #..#..
+> .#...#
+> #.#.#.
+> .#.##.
+> ###..#
+> 6 8
+> ..#....#
+> .####.#.
+> ###.#..#
+> .##.#.##
+> .#.##.##
+> #..##.#.
+
+**输出**
+
+> 1
+> 6
+> 9
+> 11
+> 15
+> 30
+
+## 解释
+
+第二个测试用例，最好将第2列设置为 “#”。
+第三个测试用例，最好将第2行设置为 “#”。
+第四个测试用例，最好将第4行设置为 “#”。
+
+## 题解
+
+##### 【DFS】【暴力】【模拟】
+我们不妨考虑 ”行“ （列同理），
+如果我们将第 r 行中的所有单元格都设置为 # ，那么包含第 r 行的**个组件的大小将是以下各项之和的**：
+
+1. r 行中的 . 的个数，因为这些单元格将被设置为 # 。让 Fr 表示某一行 r 中的这个值。
+2. 包含第 r−1 、 r 或 r+1 行中单元格的组件(即接触第 r 行的组件)的大小之和。这是因为这些组件将是包含行 r 的组件的一部分。让 Rr 表示某一行 r 的值。
+
+困难在于如何快速计算第二项。对于某个分量，让 s 表示分量的大小，让 rmin 和 rmax 表示分量中单元格的最小行数和最大行数。这意味着组件将包含行数为 rmin,rmin+1,...,rmax 的单元格。请注意，我们可以通过 dfs 找到这些值。由于组件将为 [rmin−1,rmin,…rmax+1] 中的行贡献 s ，因此我们将 s 添加到 Rrmin−1,Rrmin,…,Rrmax+1 中。这可以通过简单的方法或前缀求和来完成。
+## 代码
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int n, m, minR, maxR, minC, maxC, sz, ans; vector<int> R, C, freeR, freeC; 
+vector<vector<bool>> vis; vector<vector<char>> A;
+
+void dfs(int i, int j)
+{
+    if (i <= 0 || i > n || j <= 0 || j > m || vis[i][j] || A[i][j] == '.')
+        return;
+    
+    vis[i][j] = true;
+
+    sz++;
+    minR = min(minR, i);
+    maxR = max(maxR, i);
+    minC = min(minC, j);
+    maxC = max(maxC, j);
+
+    dfs(i - 1, j);
+    dfs(i + 1, j);
+    dfs(i, j - 1);
+    dfs(i, j + 1);
+}
+
+void solve()
+{
+    cin >> n >> m;
+
+    R.assign(n + 5, 0);
+    C.assign(m + 5, 0);
+    freeR.assign(n + 5, 0);
+    freeC.assign(m + 5, 0);
+    vis.assign(n + 5, vector<bool>(m + 5, false));
+    A.assign(n + 5, vector<char>(m + 5, ' '));
+
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            cin >> A[i][j];
+
+            if (A[i][j] == '.')
+            {
+                freeR[i]++;
+                freeC[j]++;
+            }
+        }
+    }
+    
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            if (vis[i][j] || A[i][j] == '.')
+                continue;
+
+            // Reset
+            sz = 0;
+            minR = 1e9;
+            maxR = -1e9;
+            minC = 1e9;
+            maxC = -1e9;
+
+            dfs(i, j);
+
+            // Expand by 1 since adjacent cells also connect
+            minR = max(minR - 1, 1);
+            maxR = min(maxR + 1, n);
+            minC = max(minC - 1, 1);
+            maxC = min(maxC + 1, m);
+            
+            // Update prefix sums
+            R[minR] += sz;
+            R[maxR + 1] -= sz;
+
+            C[minC] += sz;
+            C[maxC + 1] -= sz;
+        }
+    }
+
+    ans = 0;
+
+    for (int i = 1; i <= n; i++)
+    {
+        R[i] += R[i - 1];
+        ans = max(ans, freeR[i] + R[i]);
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        C[i] += C[i - 1];
+        ans = max(ans, freeC[i] + C[i]);
+    }
+
+    cout << ans << "\n";
+}
+
+int main()
+{
+    ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+    int t;cin >> t;
+    while (t --) solve();
+}
+```
