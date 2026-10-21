@@ -9,7 +9,7 @@ draft: false
 lang: 'zh-CN'
 ---
 
-[刷题日志](https://github.com/lvjianchaos/Algorithm-Problem)记录着我平日解决过的算法题与对应的题解（它们有些业已在我博客中发表），通常是有趣的😊，或对我而言有挑战性的😱，有时也记录着我在进行算法竞赛中的思考🤔。
+[刷题日志](https://github.com/lvjianchaos/Algorithm-Problem)记录着我平日解决过的算法题与对应的题解（它们有些已在我博客中发表），通常是有趣的😊，或对我而言有挑战性的😱，有时也记录着我在进行算法竞赛中的思考🤔。
 
 :::important
 你可以在我的GitHub上找到它们！
