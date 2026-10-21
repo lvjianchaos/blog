@@ -32,6 +32,8 @@ enum I18nKey {
 	more = "more",
 	toc = "toc",
 	backToTop = "backToTop",
+	notFound = "notFound",
+	notFoundDesc = "notFoundDesc",
 
 	author = "author",
 	publishedAt = "publishedAt",

@@ -35,6 +35,9 @@ export const en: Translation = {
 	[Key.more]: "More",
 	[Key.toc]: "Contents",
 	[Key.backToTop]: "Back to top",
+	[Key.notFound]: "Page not found",
+	[Key.notFoundDesc]:
+		"The page you are looking for may have been moved or deleted.",
 
 	[Key.author]: "Author",
 	[Key.publishedAt]: "Published at",

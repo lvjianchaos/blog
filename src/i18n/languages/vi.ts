@@ -35,6 +35,8 @@ export const vi: Translation = {
 	[Key.more]: "Thêm",
 	[Key.toc]: "Mục lục",
 	[Key.backToTop]: "Về đầu trang",
+	[Key.notFound]: "Không tìm thấy trang",
+	[Key.notFoundDesc]: "Trang bạn tìm có thể đã được di chuyển hoặc xóa.",
 
 	[Key.author]: "Tác giả",
 	[Key.publishedAt]: "Đăng vào lúc",

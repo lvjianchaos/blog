@@ -35,6 +35,9 @@ export const es: Translation = {
 	[Key.more]: "Más",
 	[Key.toc]: "Índice",
 	[Key.backToTop]: "Volver arriba",
+	[Key.notFound]: "Página no encontrada",
+	[Key.notFoundDesc]:
+		"La página que buscas puede haber sido movida o eliminada.",
 
 	[Key.author]: "Autor",
 	[Key.publishedAt]: "Publicado el",

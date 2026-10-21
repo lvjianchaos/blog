@@ -35,6 +35,8 @@ export const th: Translation = {
 	[Key.more]: "ดูเพิ่ม",
 	[Key.toc]: "สารบัญ",
 	[Key.backToTop]: "กลับไปด้านบน",
+	[Key.notFound]: "ไม่พบหน้านี้",
+	[Key.notFoundDesc]: "หน้าที่คุณกำลังมองหาอาจถูกย้ายหรือลบไปแล้ว",
 
 	[Key.author]: "ผู้เขียน",
 	[Key.publishedAt]: "เผยแพร่เมื่อ",

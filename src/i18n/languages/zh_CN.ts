@@ -35,6 +35,8 @@ export const zh_CN: Translation = {
 	[Key.more]: "更多",
 	[Key.toc]: "目录",
 	[Key.backToTop]: "回到顶部",
+	[Key.notFound]: "页面不存在",
+	[Key.notFoundDesc]: "你访问的页面可能已被移动或删除。",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "发布于",

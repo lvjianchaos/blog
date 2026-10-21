@@ -35,6 +35,9 @@ export const id: Translation = {
 	[Key.more]: "Lainnya",
 	[Key.toc]: "Daftar Isi",
 	[Key.backToTop]: "Kembali ke atas",
+	[Key.notFound]: "Halaman tidak ditemukan",
+	[Key.notFoundDesc]:
+		"Halaman yang Anda cari mungkin telah dipindahkan atau dihapus.",
 
 	[Key.author]: "Penulis",
 	[Key.publishedAt]: "Diterbitkan pada",

@@ -35,6 +35,8 @@ export const tr: Translation = {
 	[Key.more]: "Daha Fazla",
 	[Key.toc]: "İçindekiler",
 	[Key.backToTop]: "Başa dön",
+	[Key.notFound]: "Sayfa bulunamadı",
+	[Key.notFoundDesc]: "Aradığınız sayfa taşınmış veya silinmiş olabilir.",
 
 	[Key.author]: "Yazar",
 	[Key.publishedAt]: "Yayınlanma:",

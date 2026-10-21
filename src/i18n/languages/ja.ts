@@ -35,6 +35,8 @@ export const ja: Translation = {
 	[Key.more]: "もっと",
 	[Key.toc]: "目次",
 	[Key.backToTop]: "トップへ戻る",
+	[Key.notFound]: "ページが見つかりません",
+	[Key.notFoundDesc]: "お探しのページは移動または削除された可能性があります。",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "公開日",

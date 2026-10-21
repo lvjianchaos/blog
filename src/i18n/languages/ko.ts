@@ -35,6 +35,8 @@ export const ko: Translation = {
 	[Key.more]: "더 보기",
 	[Key.toc]: "목차",
 	[Key.backToTop]: "맨 위로",
+	[Key.notFound]: "페이지를 찾을 수 없습니다",
+	[Key.notFoundDesc]: "찾으시는 페이지가 이동되었거나 삭제되었을 수 있습니다.",
 
 	[Key.author]: "저자",
 	[Key.publishedAt]: "게시일",

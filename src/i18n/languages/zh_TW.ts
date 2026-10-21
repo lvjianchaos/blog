@@ -35,6 +35,8 @@ export const zh_TW: Translation = {
 	[Key.more]: "更多",
 	[Key.toc]: "目錄",
 	[Key.backToTop]: "回到頂部",
+	[Key.notFound]: "頁面不存在",
+	[Key.notFoundDesc]: "你訪問的頁面可能已被移動或刪除。",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "發佈於",
