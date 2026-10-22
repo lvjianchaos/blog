@@ -20,21 +20,21 @@ standard input / standard output
 
 ## 题目
 
-You have $n$ rectangles, the $i$\-th of which has a width of $a_i$ and a height of $b_i$. 
+You have $n$ rectangles, the $i$\-th of which has a width of $a_i$ and a height of $b_i$.
 
-You can perform the following operation an unlimited number of times: choose a rectangle and a cell in it, and then color it. 
+You can perform the following operation an unlimited number of times: choose a rectangle and a cell in it, and then color it.
 
-Each time you completely color any row or column, you earn $1$ point. Your task is to score at least $k$ points with as few operations as possible. 
+Each time you completely color any row or column, you earn $1$ point. Your task is to score at least $k$ points with as few operations as possible.
 
 Suppose you have a rectangle with a width of $6$ and a height of $3$. You can score $4$ points by coloring all the cells in any $4$ columns, thus performing $12$ operations.
 
 ## 输入
 
-The first line contains an integer $t$ ($1 \le t \le 100$) — the number of test cases. The following are the descriptions of the test cases. 
+The first line contains an integer $t$ ($1 \le t \le 100$) — the number of test cases. The following are the descriptions of the test cases.
 
-The first line of each test case description contains two integers $n$ and $k$ ($1 \le n \le 1000, 1 \le k \le 100$) — the number of rectangles in the case and the required number of points. 
+The first line of each test case description contains two integers $n$ and $k$ ($1 \le n \le 1000, 1 \le k \le 100$) — the number of rectangles in the case and the required number of points.
 
-The next $n$ lines contain the descriptions of the rectangles. The $i$\-th line contains two integers $a_i$ and $b_i$ ($1 \le a_i, b_i \le 100$) — the width and height of the $i$\-th rectangle. 
+The next $n$ lines contain the descriptions of the rectangles. The $i$\-th line contains two integers $a_i$ and $b_i$ ($1 \le a_i, b_i \le 100$) — the width and height of the $i$\-th rectangle.
 
 It is guaranteed that the sum of the values of $n$ across all test cases does not exceed $1000$.
 
@@ -86,9 +86,7 @@ For each test case, output a single integer — the minimum number of operations
 
 ## 题解
 
-###### 【赛时思考：贪心】
-	赛时的时候，想利用贪心的思想进行求解 ———— 按照边长短的矩形进行排序，将矩形涂成剩余正方形，再一行一列取填涂 ———— 可惜并不能过，可以观察最后一个样例。
-###### 【dp】
+赛时的时候，想利用贪心的思想进行求解 ———— 按照边长短的矩形进行排序，将矩形涂成剩余正方形，再一行一列取填涂 ———— 可惜并不能过，可以观察最后一个样例。
 
 我们思考若已知`f[x]`，那么`f[x + k] = f[x] + c[i][k]`
 其中`c[i][k]`表示从第`i`个矩形中得到`k`所需操作数。
@@ -98,7 +96,7 @@ For each test case, output a single integer — the minimum number of operations
 
 确定状态：`f[i]` 得到分数`i`的操作数
 确定转移：`f2[i + j] = min(f2[i + j],f1[i] + c[x][j])
-确定范围：分数<=100；矩形数<=1000；边长均<=100； 
+确定范围：分数<=100；矩形数<=1000；边长均<=100；
 ## 代码
 
 ```c++

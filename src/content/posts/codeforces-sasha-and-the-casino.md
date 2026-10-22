@@ -10,7 +10,7 @@ lang: 'zh-CN'
 ---
 **CF Round 926(Div. 2)**
 
-**[C. Sasha and the Casino][https://codeforces.com/contest/1929/problem/C ]** 
+**[C. Sasha and the Casino][https://codeforces.com/contest/1929/problem/C ]**
 
 <!--more-->
 
@@ -82,21 +82,17 @@ standard input / standard output
 
 在第二个测试案例中，萨沙第一次只能下注 1 枚硬币。但如果输了，他就不能再下注，所以他不能保证得到他想要的所有硬币。
 
-## 题解
-
-**题意**
+## 题意
 
 赌博。初始钱a 最多会输x次 会有大保底让你**在x + 1次必赢**。
 
 输了，投的钱没有；
 
-赢了，可获得k倍钱(即增加了k-1倍投入钱且投入钱返回) 
+赢了，可获得k倍钱(即增加了k-1倍投入钱且投入钱返回)
 
 判断是否可以赚到**任意钱**。
 
-**思路**
-
-##### 【**博弈论 思维**】
+## 思路
 
 看作是和赌场老板的**博弈**，并且我们都知道大保底这件事，这是共识。
 

@@ -97,15 +97,11 @@ After removing the edge 1 — 3, the tree will look as follows:
 
 The tree has split into two connected components. The first component consists of two vertices: 1 and 2. The second connected component consists of three vertices: 3,4 and 5. In both connected components, there are at least two vertices. It can be shown that the answer 3 is not achievable, so the answer is 2.
 
-## 题解
-
-##### **题意**：
+## 题意
 
 给你一棵n节点的树，要求切k条边，找出每段都尽可能大且至少是x
 
-##### **思路**：
-
-##### 【二分答案】
+## 思路
 
 类似的：有n个木头切成k段，每段的长度都至少是x且尽可能大
 

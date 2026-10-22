@@ -22,44 +22,44 @@ lang: 'zh-CN'
 
 当然构建过程，可以**边循环便构建**，也就是说：在遍历过程中统计这个数的出现次数，根据出现次数在对应行进行元素的添加。
 <img src="https://pic.leetcode.cn/1741320320-YkycVn-lc2610-c.png" width="60%" />
-#### 学习
-##### java中HashMap的API
+## 学习
+### java中HashMap的API
 1. **`put(Key key, Value value)`：放入键值对**
-	1. 如果HashMap中已经存在相同的Key，则新的Value会覆盖旧的Value。
+1. 如果HashMap中已经存在相同的Key，则新的Value会覆盖旧的Value。
 2. **`get(Key key)`：获取Value**
-	1. 如果HashMap中不存在该Key，则返回`null`。
+1. 如果HashMap中不存在该Key，则返回`null`。
 3. **`remove(Key key)`：移除键值对**
 4. **`containsKey(Key key)`：判断Key是否存在**
 5. **`containsValue(Value value)`：判断Value是否存在**
-	1.  这个方法的效率相对较低，因为它需要遍历整个HashMap；通常不推荐频繁使用。
+1.  这个方法的效率相对较低，因为它需要遍历整个HashMap；通常不推荐频繁使用。
 6. **`size()`：获取键值对数量**
 7. **`isEmpty()`：判断是否为空**
 8. **`clear()`：清空HashMap**
 9. **`keySet()`：获取所有Key的集合**
-	1.  返回一个包含HashMap中所有Key的Set集合。
+1.  返回一个包含HashMap中所有Key的Set集合。
 10. **`values()`：获取所有Value的集合**
-	1. 返回一个包含HashMap中所有Value的Collection集合。
+1. 返回一个包含HashMap中所有Value的Collection集合。
 11. **`entrySet()`：获取所有键值对的集合**
-	1. 返回一个包含HashMap中所有键值对的Set集合，每个元素是一个`Map.Entry`对象。`Map.Entry`对象包含了Key和Value。
-	2. **这是遍历HashMap最高效的方式**
+1. 返回一个包含HashMap中所有键值对的Set集合，每个元素是一个`Map.Entry`对象。`Map.Entry`对象包含了Key和Value。
+2. **这是遍历HashMap最高效的方式**
 12. ***merge()*** **智能合并器**
 	`merge(Key key, Value value, BiFunction<? super Value, ? super Value, ? extends Value> remappingFunction)`
-	
-	- **`key`：** 要合并的键。
-	- **`value`：** 要合并的值。
-	- **`remappingFunction`：** 一个函数式接口，用于处理键冲突。它接收两个参数：
-	    - `oldValue`：HashMap中已存在的键对应的值。
-	    - `value`：要合并的值。
-	    - `remappingFunction`返回的值将作为合并后键对应的新值。
-	
-	**`merge()`方法的工作流程：**
-	
-	1. **检查键是否存在：** `merge()`方法首先检查HashMap中是否已经存在指定的键。
-	2. **键不存在：** 如果键不存在，则将键值对直接添加到HashMap中。
-	3. **键存在：** 如果键存在，则调用`remappingFunction`来处理键冲突。
-	4. **`remappingFunction`返回`null`：** 如果`remappingFunction`返回`null`，则从HashMap中移除该键。
-	5. **`remappingFunction`返回非`null`值：** 如果`remappingFunction`返回非`null`值，则将HashMap中该键对应的值更新为`remappingFunction`返回的值。
-##### java中ArrayList的API
+
+- **`key`：** 要合并的键。
+- **`value`：** 要合并的值。
+- **`remappingFunction`：** 一个函数式接口，用于处理键冲突。它接收两个参数：
+    - `oldValue`：HashMap中已存在的键对应的值。
+    - `value`：要合并的值。
+    - `remappingFunction`返回的值将作为合并后键对应的新值。
+
+**`merge()`方法的工作流程：**
+
+1. **检查键是否存在：** `merge()`方法首先检查HashMap中是否已经存在指定的键。
+2. **键不存在：** 如果键不存在，则将键值对直接添加到HashMap中。
+3. **键存在：** 如果键存在，则调用`remappingFunction`来处理键冲突。
+4. **`remappingFunction`返回`null`：** 如果`remappingFunction`返回`null`，则从HashMap中移除该键。
+5. **`remappingFunction`返回非`null`值：** 如果`remappingFunction`返回非`null`值，则将HashMap中该键对应的值更新为`remappingFunction`返回的值。
+### java中ArrayList的API
 1. **`add(E e)`：添加元素到末尾**
 2. **`add(int index, E e)`：在指定位置插入元素**
 3. **`get(int index)`：获取指定位置的元素**
@@ -71,17 +71,17 @@ lang: 'zh-CN'
 9. **`clear()`：清空ArrayList**
 10. **`contains(Object o)`：判断是否包含指定元素**
 11. **`indexOf(Object o)`：查找指定元素的索引**
-	1. 返回ArrayList中第一个与指定元素相等的元素的索引。如果ArrayList中不包含该元素，则返回-1。
+1. 返回ArrayList中第一个与指定元素相等的元素的索引。如果ArrayList中不包含该元素，则返回-1。
 12. **`lastIndexOf(Object o)`：查找指定元素的最后一个索引**
-	1. 如果ArrayList中不包含该元素，则返回-1。
-	2. （当列表中可能存在重复元素时有用）
+1. 如果ArrayList中不包含该元素，则返回-1。
+2. （当列表中可能存在重复元素时有用）
 13. **`toArray()`：转换为数组**
-	1. 将ArrayList转换为一个Object数组。
+1. 将ArrayList转换为一个Object数组。
 14. **`toArray(T[] a)`：转换为指定类型的数组**
 15. **`subList(int fromIndex, int toIndex)`：获取子列表**
-	1. 不包含`toIndex`位置的元素
+1. 不包含`toIndex`位置的元素
 
-##### 关于java迭代器
+### 关于java迭代器
 1. **`hasNext()`：判断是否还有下一个元素**
     - **作用：** 如果迭代器指向的集合中还有下一个元素，则返回`true`；否则，返回`false`。
     - **应用场景：** 在遍历集合之前，可以使用`hasNext()`方法来判断是否还有元素可以遍历。
@@ -96,11 +96,11 @@ lang: 'zh-CN'
         - `remove()`方法只能在调用`next()`方法之后调用，并且只能调用一次。
         - 如果在调用`next()`方法之前调用`remove()`方法，或者在调用`remove()`方法之后再次调用`remove()`方法，则会抛出`java.lang.IllegalStateException`异常。
 - **Java中迭代器的`remove()`方法行为：**
-	1. **调用`next()`方法：** 必须先调用`next()`方法，才能调用`remove()`方法。`remove()`方法删除的是`next()`方法上次返回的元素。
-	2. **删除当前元素：** `remove()`方法会删除迭代器当前指向的元素。
-	3. **迭代器状态更新：** `remove()`方法会自动更新迭代器的状态，以便下次调用`next()`方法时，迭代器能够正确地指向下一个元素。
+1. **调用`next()`方法：** 必须先调用`next()`方法，才能调用`remove()`方法。`remove()`方法删除的是`next()`方法上次返回的元素。
+2. **删除当前元素：** `remove()`方法会删除迭代器当前指向的元素。
+3. **迭代器状态更新：** `remove()`方法会自动更新迭代器的状态，以便下次调用`next()`方法时，迭代器能够正确地指向下一个元素。
 
-##### 关于CPP迭代器
+### 关于CPP迭代器
 - **`erase(it)`：** 当你使用`erase(it)`删除迭代器`it`指向的元素时，`it`本身会失效。但是，`erase()`方法会返回一个指向被删除元素之后元素的有效迭代器。
 ### Java在创建列表的构造函数
 ```java

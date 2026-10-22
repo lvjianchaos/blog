@@ -10,7 +10,7 @@ lang: 'zh-CN'
 ---
 ## A
 
-#### 构造
+### 构造
 
 给你一个坐标 ( x,y ) 和k。要你构造出k组坐标，使得 ( x[1] + x[2] + ... + x[k] ) / k = x，( y[1] + y[2] + ... + y[k] ) / k = y。
 
@@ -54,13 +54,13 @@ int main()
 
 ## B
 
-#### 构造
+### 构造
 
 给你一组排列 p，请构造出另一组排列 q，使得这样的（ i , j ）, p[i] + p[i + 1] + ... + p[j] = q[i] + q[i + 1] + ... + q[j] ，最少。
 
 最少是这样的（i，j）只有 1 组（1，n）。这样的 q 有多种，
 如： a. 对排列p每个元素进行++/--，最大/小元素变为1/n；
-	b. 对排列p进行旋转，即q = (p[2] , p[3], ... , p[n] , p[1] )。
+b. 对排列p进行旋转，即q = (p[2] , p[3], ... , p[n] , p[1] )。
 
 我们发现只要使区间和不同即可。像a.的操作、b.的操作都使其不相同。
 
@@ -114,7 +114,7 @@ int main()
     }
 }
 ```
-##### 注: rotate()函数
+#### 注: rotate()函数
 
 > template< class ForwardIt >
 > ForwardIt rotate( ForwardIt first, ForwardIt middle, ForwardIt last );
@@ -137,7 +137,7 @@ int main()
     std::rotate(v.rbegin(), v.rbegin() + 1, v.rend());
     print("simple rotate right:\t", v);
 ```
-                  
+
 另外：
 
 | 相关函数                                                                                                                     | 功能         |

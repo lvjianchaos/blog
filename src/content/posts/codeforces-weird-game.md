@@ -8,7 +8,7 @@ category: '算法'
 draft: false
 lang: 'zh-CN'
 ---
-**Croc Champ 2013 - Round 2** 
+**Croc Champ 2013 - Round 2**
 
 **[A. Weird Game](https://codeforces.com/problemset/problem/293/A)**
 
@@ -82,15 +82,11 @@ Print "First", if both players play optimally well and Yaroslav wins. If Andrey 
 
 > Second
 
-## 题解
-
-**题意**
+## 题意
 
 两个人各拥有一个01串a,b，长度为2n，分先后手，每一回合挑选一个最佳字符来使自己的得到1更多，挑选过字符的位置不允许再挑选。问最终谁挑选得到的1更多。
 
-**思路**
-
-##### 【博弈 贪心】
+## 思路
 
 我们知道最终每个人手上有n个字符。观察，会有**4种**情况：
 

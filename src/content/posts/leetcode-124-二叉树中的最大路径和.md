@@ -9,16 +9,16 @@ draft: false
 lang: 'zh-CN'
 ---
 > **比赛场次**：无
-> **比赛题目**： [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/) 
+> **比赛题目**： [124. 二叉树中的最大路径和](https://leetcode.cn/problems/binary-tree-maximum-path-sum/)
 
-## 题意：
+## 题意
 顾名思义，给你一个二叉树，要你找出最大路径和。
-## 题解：
+## 题解
 
-做法极其类似 [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/) 
+做法极其类似 [543. 二叉树的直径](https://leetcode.cn/problems/diameter-of-binary-tree/)
 枚举节点，计算左右子树的最大链和+该节点值拼成一条路径更新答案，返回当前字数最大链和
 
-### 代码实现
+## 代码实现
 ```java
 class Solution {
     private int ans = Integer.MIN_VALUE;

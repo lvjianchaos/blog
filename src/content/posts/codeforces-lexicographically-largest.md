@@ -72,9 +72,9 @@ For each test case, output the lexicographically largest b.
 
 **输出**
 
-> 3 2 
-> 1000000005 1000004 1003 102 2 
-> 11 7 6 
+> 3 2
+> 1000000005 1000004 1003 102 2
+> 11 7 6
 
 ## 解释
 
@@ -86,15 +86,11 @@ As [3,2] is lexicographically larger than [3], we should select i=1 in the first
 
 In the second test case, in each operation, select the last element.
 
-## 题解
-
-##### 【贪心 思维】
-
-##### 题意
+## 题意
 
 给你一个数组，数组中每个元素的实际的值是索引加该元素本身的值。如果我们选择某个元素，那么会使这个元素右边的所有元素的值都减1，因为索引会减一。问我们如何才能使新构建的集合中词序最大。
 
-##### 思路
+## 思路
 
 为了尽可能**避免索引减一**，我们一定会想**从右往左**的进行insert操作，但不允许存在重复元素，所以如果有重复元素，为了**不减少元素数量**，就先insert左边的，再insert右边的。
 
@@ -136,5 +132,3 @@ int main()
 	return 0;
 }
 ```
-
-###

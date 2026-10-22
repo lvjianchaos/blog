@@ -8,10 +8,6 @@ category: '算法'
 draft: false
 lang: 'zh-CN'
 ---
-##### [牛客周赛 Round 62](https://ac.nowcoder.com/acm/contest/91177)
-
-##### [C - 小红的圆移动](https://ac.nowcoder.com/acm/contest/91177/C)
-
 ## 题意
 
 给你 $n$ 个圆，位于坐标 $(x,y)$ ，半径为 $r$ ，看是否有超过 $k$ 个圆内包含原点，若有，则需要移动某些圆，使包含原点的圆的个数不超过 $k$ 。移动的代价为：该圆面积乘以移动的距离。要你最小化这个代价并输出。

@@ -15,8 +15,8 @@ lang: 'zh-CN'
 ## 题解
 
 要将字母异位词分组，就应该判断它们是否是一组的；可以将字符串变化为字符数组，并对此数组进行排序后，若排序后相同则就是异位词，然后就将此字符串放入列表中。
-#### 学习
-##### Java 字符串操作 (String)
+## 学习
+### Java 字符串操作 (String)
 - **String 对象是不可变的！** 任何修改操作都会创建新的 String 对象。
 **1. 创建字符串**
 - `String str = "Hello";` // 字面量
@@ -59,7 +59,7 @@ lang: 'zh-CN'
     - `%c`: 字符
     - `%b`: 布尔值
 - **valueOf():** `String.valueOf(Object obj)` (静态方法，将其他类型转换为字符串)
-##### 关于HashMap的computeIfAbsent()
+### 关于HashMap的computeIfAbsent()
 **`HashMap.computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction)`**
 
 **作用：**
@@ -77,7 +77,7 @@ lang: 'zh-CN'
 - 如果键 `key` 不存在，则返回 `mappingFunction` 计算出的新值。
 - 如果 `mappingFunction` 返回 `null`，则 `computeIfAbsent()` 方法返回 `null`，并且不会将键 `key` 添加到 `HashMap` 中。
 
-### 代码
+## 代码
 ```java
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {

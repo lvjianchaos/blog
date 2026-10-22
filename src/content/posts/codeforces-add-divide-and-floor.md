@@ -73,15 +73,11 @@ In the second testcase, you can't make less than 2 operations. There are multipl
 
 In the last testcase, you can't make less than 6 operations. Since 6 is greater than n, you don't have to print them. One possible answer sequence is [0,0,0,0,0,0]. We are just dividing the second element by 2 every time and not changing the first element.
 
-## 题解
-
-##### 题意
+## 题意
 
 给你一组数，你将进行下列操作：选一个数x，数组中每个元素+x/2向下取整。问：使数组中**所有元素相等的操作次数**是多少？
 
-##### 思路
-
-##### 【数学 贪心】
+## 思路
 
 易得我们只**要将最小数和最大数相等**，那么其他的都会相等，不严谨证明：在使最小数和最大数相等的过程中，中间的数一定会变成最小数或最大数的一个再继续下去。那么我们该如何操作呢？要使操作数最小我们只需要选取x=0或者1。为什么？因为这样不会变成无限，最终的情况也是都为0了。
 

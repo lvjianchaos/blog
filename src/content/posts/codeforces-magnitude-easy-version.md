@@ -77,8 +77,6 @@ standard input / standard output
 
 ## 题解
 
-##### 【前缀和 贪心 暴力】
-
 **问题的关键**在于我们何时选择`option 1`，何时选择`option 2`？分别选择几次？
 
 显而易见，我们选择`option 2`的时候一定是此时的`c+a[i] < 0`，因为如果此时`c+a[i]`加`||`效果等同于选择`option 1`。

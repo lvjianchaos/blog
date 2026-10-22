@@ -8,14 +8,13 @@ category: '算法'
 draft: false
 lang: 'zh-CN'
 ---
-> **比赛场次**：
-> **比赛题目**： [207. 课程表](https://leetcode.cn/problems/course-schedule/) 
-## 题意：
+> **比赛题目**： [207. 课程表](https://leetcode.cn/problems/course-schedule/)
+## 题意
 
 你需要选修 numCourses 门课，但有些会有先修，你需要判断是否能够修完所有课程。
 换句话说：给你一个有向图，判断图中是否有环
 
-## 题解：
+## 题解
 
 每个课程都有前置课程，我们一层一层学，考虑到这就是一个***拓补排序***，判断这个有向图***无环***：
 1. 根据依赖关系，构建邻接表、入度数组。
@@ -25,8 +24,8 @@ lang: 'zh-CN'
 
 除此之外，还可以使用dfs来进行判环，标记节点的3个不同状态，参考[灵神题解](https://leetcode.cn/problems/course-schedule/solutions/2992884/san-se-biao-ji-fa-pythonjavacgojsrust-by-pll7)
 
-### 代码实现
-#### 法一
+## 代码实现
+### 法一
 ```java
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -68,7 +67,7 @@ class Solution {
 }
 ```
 > **时间复杂度：**$O(V+E)$ $V$ 指节点个数，$E$ 指边个数
-> **空间复杂度：**$O(V+E)$ 
+> **空间复杂度：**$O(V+E)$
 
 ```java
 class Solution {
@@ -102,7 +101,7 @@ class Solution {
 }
 ```
 > **时间复杂度：**$O(V+E)$ $V$ 指节点个数，$E$ 指边个数；每个节点至多递归访问一次，每条边至多遍历一次。
-> **空间复杂度：**$O(V+E)$ 
+> **空间复杂度：**$O(V+E)$
 ## 其他
 法一法二中，快速简易地构建邻接表使用了
 ```java

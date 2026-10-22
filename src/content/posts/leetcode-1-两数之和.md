@@ -8,22 +8,12 @@ category: '算法'
 draft: false
 lang: 'zh-CN'
 ---
-> **比赛场次**：
-> **比赛题目**： 
 
 <!--more-->
-	2 seconds / 256 megabytes
-	standard input / standard output
+2 seconds / 256 megabytes
 
-## 题意：
+standard input / standard output
 
-## 题解：
-
-### 代码实现
-
-> **时间复杂度：**$O()$
-> **空间复杂度：**$O()$ 
-## 其他
 ## 题意
 给定一数组和一个目标值，要求在数组中找出两个数之和为目标值，返回它们的下标。
 
@@ -37,7 +27,7 @@ lang: 'zh-CN'
 > 它们最终都是调用 `vector` 的默认构造函数
 
 ### I. 暴力枚举
-枚举数组所有的 $(i,j)\ \ 0≤i<j≤length$ ，也就是得到其中的**所有组合**，寻找是否两数之和为目标值。时间复杂度 $O(n^2)$ 
+枚举数组所有的 $(i,j)\ \ 0≤i<j≤length$ ，也就是得到其中的**所有组合**，寻找是否两数之和为目标值。时间复杂度 $O(n^2)$
 ```cpp
 class Solution {
 public:

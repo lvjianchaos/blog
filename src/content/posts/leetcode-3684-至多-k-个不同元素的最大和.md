@@ -10,16 +10,16 @@ lang: 'zh-CN'
 ---
 > **比赛场次**：周赛467
 > **比赛题目**：Q2  [3684. 至多 K 个不同元素的最大和](https://leetcode.cn/problems/maximize-sum-of-at-most-k-distinct-elements/)
-## 题意：
+## 题意
 给你一组整型数组，要求你找出最大的$k$个元素，且这$k$个元素不重复。
-## 题解：
+## 题解
 
 找出最大的k个元素，要求其不重复，直接朴素的思考就是**排序去重**，问题在于如何实现。
 排序都有各自的$sort$方法。
 对于$Cpp$，可以依靠$unique$这些函数方便快捷做到原地去重；
-对于$Java$，有多种实现方式，具体参考：[Java 数组去重：原理、方法与最佳实践](https://javaguidepro.com/blog/java-remove-duplicates-from-array/) ，并完成 [26. 删除有序数组中的重复项](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/) 
+对于$Java$，有多种实现方式，具体参考：[Java 数组去重：原理、方法与最佳实践](https://javaguidepro.com/blog/java-remove-duplicates-from-array/) ，并完成 [26. 删除有序数组中的重复项](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/)
 
-### 代码实现
+## 代码实现
 ```java
 class Solution {
     public int[] maxKDistinct(int[] nums, int k) {
@@ -51,6 +51,6 @@ class Solution {
 }
 ```
 > **时间复杂度：**$O(nlogn)$
-> **空间复杂度：**$O(n)$ 
+> **空间复杂度：**$O(n)$
 
 ## 其他

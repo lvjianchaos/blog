@@ -9,19 +9,19 @@ draft: false
 lang: 'zh-CN'
 ---
 > **比赛场次**：周赛147
-> **比赛题目**： [3408. 设计任务管理器](https://leetcode.cn/problems/design-task-manager/) 
+> **比赛题目**： [3408. 设计任务管理器](https://leetcode.cn/problems/design-task-manager/)
 
-## 题意：
+## 题意
 
 设计题，要求设计一个任务管理器，包含三个变量：userId, taskId, 任务的priority优先级。需要实现：任务的添加，修改，删除，执行优先级最高的任务。
 具体如下：
 1. 构造器`public TaskManager(List<List<Integer>> tasks)`
 2. 添加函数`void add(int userId, int taskId, int priority)`
-3. 修改`void edit(int taskId, int newPriority)` 
-4. 删除`void rmv(int taskId)` 
-5. 执行`int execTop()` 
+3. 修改`void edit(int taskId, int newPriority)`
+4. 删除`void rmv(int taskId)`
+5. 执行`int execTop()`
 
-## 题解：
+## 题解
 
 由于要根据taskId修改优先级，且一个用户对应多个任务，故用哈希表记录每个任务编号对应的最新的优先级何用户编号。
 由于要实现优先执行优先级最大、用户编号最大的任务，故要使用优先队列维护这三个变量
@@ -31,7 +31,7 @@ edit()函数，注意懒修改，从map根据taskId获取userId直接添加add()
 rmv()函数，懒删除，将这个taskId对应的priority设置为-1
 execTop()函数，不断从pq中取出数据，判断所取数据是否是对的
 
-### 代码实现
+## 代码实现
 ```java
 class TaskManager {
 	// taskId -> [priority,userId]
@@ -88,6 +88,6 @@ class TaskManager {
 > - add 和 edit：$O(log(n+q))$，其中 q 是 add 和 edit 的调用次数之和。
 > - rmv：$O(1)$。
 > - execTop：均摊 $O(log(n+q))$。每个元素至多入堆出堆各一次。
-> **空间复杂度：**$O(n+q)$ 
+> **空间复杂度：**$O(n+q)$
 
 ## 其他

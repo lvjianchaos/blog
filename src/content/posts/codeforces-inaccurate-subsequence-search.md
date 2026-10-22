@@ -85,15 +85,9 @@ In the second example, good subsegments start at positions 1, 2, and 3.
 
 In the third example, good subsegments start at positions 1 and  2.
 
-## 题解
-
-##### 题意
+## 题意
 
 给你两个数组，在第一个数组中找出大小为m的子段，如果其中有k个与之匹配的元素，那么就是一个好数组，问总共有几个。
-
-##### 思路
-
-##### **【暴力 模拟 滑动窗口思想】**
 
 **滑动窗口思想**，
 

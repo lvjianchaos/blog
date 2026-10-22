@@ -72,15 +72,11 @@ In case if there is no any Pythagorean triple containing integer *n*, print - 
 
 > 2244 2245
 
-## 题解
-
-**题意**
+## 题意
 
 给你一个整数n，让你构造另两个整数满足三角形的勾股定理。
 
-**思路**
-
-##### 【**构造**】
+## 思路
 
 首先，`n <= 2`无解
 

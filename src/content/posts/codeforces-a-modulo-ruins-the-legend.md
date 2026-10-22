@@ -63,12 +63,11 @@ standard input / standard output
 ## 题解
 
 板子吗？#2. 扩展欧几里得求逆元
-##### 【数论】【exgcd扩展欧几里得算法】【裵蜀定理】 
 > 设 sum(a[n]) = sum，
 > 	sum + s * n + n(n + 1)/2 * d (mod m)          (原式)
 > 	<=> sum + s * n + n(n + 1)/2 * d + t * m    (同余定义)
 > 		<=> s * n + n(n+1)/2 * d = k1 * gcd(n,n(n+1)/2)    (裴蜀定理)
-> 	<=>  sum + k1 * gcd(n,n(n+1)/2) + t * m    
+> 	<=>  sum + k1 * gcd(n,n(n+1)/2) + t * m
 > 		<=>  k1 * gcd(n,n(n+1)/2) + t * m = k2 * gcd(n,m,n(n+1)/2)    (裴蜀定理)
 > 	<=> sum + k2 * gcd(n,m,n(n+1)/2)
 > 	这就是最小值。最小值就是sum减去足够倍数的gcd(n,m,n(n+1)/2)。等价为：sum % gcd(n,m,n(n+1)/2)
