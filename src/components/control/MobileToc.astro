@@ -195,7 +195,20 @@ const firstTitle =
     }
 </style>
 
+<!--
+    Run-once guard below: `@swup/astro` installs `SwupScriptsPlugin`, which re-creates and
+    re-executes every *inline* script after each navigation (module scripts with a `src` are
+    cached by the browser, inline ones are not). A second copy of this module attached a
+    second set of document listeners, so one tap toggled the sheet open and straight back to
+    closed and the bar looked dead. Every handler here is delegated on `document` and
+    re-queries the DOM on demand, so running once per session is enough.
+-->
 <script>
+    (() => {
+    const scope = window as unknown as { __fuwariMobileToc?: boolean };
+    if (scope.__fuwariMobileToc) return;
+    scope.__fuwariMobileToc = true;
+
     type MobileTocState = {
         links: HTMLAnchorElement[];
         headings: HTMLElement[];
@@ -340,4 +353,5 @@ const firstTitle =
 
     refresh();
     window.setTimeout(updateCurrent, 400);
+    })();
 </script>
