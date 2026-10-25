@@ -1,5 +1,9 @@
 export const PAGE_SIZE = 8;
 
+// Event dispatched on `document` whenever the resolved theme changes,
+// so that embedded widgets (e.g. the Giscus comments) can follow it.
+export const THEME_CHANGED_EVENT = "theme-changed";
+
 export const LIGHT_MODE = "light",
 	DARK_MODE = "dark",
 	AUTO_MODE = "auto";

@@ -1,5 +1,6 @@
 import type {
 	ExpressiveCodeConfig,
+	GiscusConfig,
 	LicenseConfig,
 	NavBarConfig,
 	ProfileConfig,
@@ -92,4 +93,22 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
+};
+
+export const giscusConfig: GiscusConfig = {
+	enable: true,
+	showTitle: true,
+	repo: "lvjianchaos/blog",
+	repoId: "R_kgDOQLfrkg",
+	category: "Blog Comments",
+	categoryId: "DIC_kwDOQLfrks4C48vl",
+	// `pathname` keeps the discussions that were created for the old blog,
+	// as long as the post URLs stay the same.
+	mapping: "pathname",
+	strict: "0",
+	reactionsEnabled: "1",
+	emitMetadata: "0",
+	inputPosition: "top",
+	lang: "zh-CN",
+	loading: "lazy",
 };

@@ -3,6 +3,7 @@ import {
 	DARK_MODE,
 	DEFAULT_THEME,
 	LIGHT_MODE,
+	THEME_CHANGED_EVENT,
 } from "@constants/constants.ts";
 import { expressiveCodeConfig } from "@/config";
 import type { LIGHT_DARK_MODE } from "@/types/config";
@@ -48,6 +49,17 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 	document.documentElement.setAttribute(
 		"data-theme",
 		expressiveCodeConfig.theme,
+	);
+
+	// Notify the widgets that mirror the theme (e.g. the Giscus comments)
+	document.dispatchEvent(
+		new CustomEvent(THEME_CHANGED_EVENT, {
+			detail: {
+				theme: document.documentElement.classList.contains("dark")
+					? "dark"
+					: "light",
+			},
+		}),
 	);
 }
 

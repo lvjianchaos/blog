@@ -1,0 +1,106 @@
+---
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import { giscusConfig } from "@/config";
+
+interface Props {
+	class?: string;
+	title?: string;
+	showTitle?: boolean;
+}
+
+const {
+	class: className = "",
+	title,
+	showTitle = giscusConfig.showTitle,
+} = Astro.props;
+---
+
+{giscusConfig.enable && (
+	<div class:list={["card-base px-6 md:px-9 py-6 relative w-full", className]}>
+		{showTitle && (
+			<div class="transition font-bold text-black/75 dark:text-white/75 mb-4">
+				{title ?? i18n(I18nKey.comments)}
+			</div>
+		)}
+		<div id="giscus-thread"></div>
+	</div>
+)}
+
+<script>
+	import { THEME_CHANGED_EVENT } from "@constants/constants";
+	import { giscusConfig } from "@/config";
+
+	const GISCUS_ORIGIN = "https://giscus.app";
+	const CONTAINER_ID = "giscus-thread";
+
+	type GiscusTheme = "light" | "dark";
+
+	function resolveTheme(): GiscusTheme {
+		return document.documentElement.classList.contains("dark")
+			? "dark"
+			: "light";
+	}
+
+	// Ask the mounted Giscus iframe to switch its own theme.
+	function syncTheme(theme: GiscusTheme) {
+		const iframe = document.querySelector<HTMLIFrameElement>(
+			`#${CONTAINER_ID} iframe.giscus-frame`,
+		);
+		if (!iframe?.contentWindow) {
+			return;
+		}
+		iframe.contentWindow.postMessage(
+			{ giscus: { setConfig: { theme } } },
+			GISCUS_ORIGIN,
+		);
+	}
+
+	// Load the Giscus client script into the current container.
+	// The container is recreated on every Swup navigation, so the mount guard
+	// is stored on the element itself and never has to be reset manually.
+	function mount() {
+		if (!giscusConfig.enable) {
+			return;
+		}
+
+		const container = document.getElementById(CONTAINER_ID);
+		if (!container || container.dataset.giscusMounted === "true") {
+			return;
+		}
+		container.dataset.giscusMounted = "true";
+
+		const script = document.createElement("script");
+		script.src = `${GISCUS_ORIGIN}/client.js`;
+		script.async = true;
+		script.crossOrigin = "anonymous";
+		script.setAttribute("data-giscus-script", "true");
+		script.setAttribute("data-repo", giscusConfig.repo);
+		script.setAttribute("data-repo-id", giscusConfig.repoId);
+		script.setAttribute("data-category", giscusConfig.category);
+		script.setAttribute("data-category-id", giscusConfig.categoryId);
+		script.setAttribute("data-mapping", giscusConfig.mapping);
+		script.setAttribute("data-strict", giscusConfig.strict);
+		script.setAttribute("data-reactions-enabled", giscusConfig.reactionsEnabled);
+		script.setAttribute("data-emit-metadata", giscusConfig.emitMetadata);
+		script.setAttribute("data-input-position", giscusConfig.inputPosition);
+		script.setAttribute("data-theme", resolveTheme());
+		script.setAttribute("data-lang", giscusConfig.lang);
+		script.setAttribute("data-loading", giscusConfig.loading);
+		container.appendChild(script);
+	}
+
+	// This script is bundled by Astro as a module, so it is evaluated only once
+	// per session: Swup re-runs inline scripts, but never a module with a `src`.
+	// The listener therefore has to be registered exactly once, and the mount
+	// itself is driven by the `astro:page-load` event that `@swup/astro` emits
+	// after every navigation.
+	document.addEventListener("astro:page-load", mount);
+	document.addEventListener(THEME_CHANGED_EVENT, (event) => {
+		const theme = (event as CustomEvent<{ theme?: GiscusTheme }>).detail
+			?.theme;
+		syncTheme(theme === "dark" ? "dark" : "light");
+	});
+
+	mount();
+</script>
