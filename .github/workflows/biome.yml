@@ -15,6 +15,8 @@ jobs:
       - name: Setup Biome
         uses: biomejs/setup-biome@f382a98e582959e6aaac8e5f8b17b31749018780 # v2.5.0
         with:
-          version: latest
+          # Keep it in sync with the version in package.json, otherwise a new
+          # Biome release can turn the check red without any code change.
+          version: 2.2.5
       - name: Run Biome
         run: biome ci ./src --reporter=github
