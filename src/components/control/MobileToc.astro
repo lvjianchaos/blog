@@ -1,0 +1,358 @@
+---
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
+import type { MarkdownHeading } from "astro";
+import { Icon } from "astro-icon/components";
+import { siteConfig } from "@/config";
+
+interface Props {
+	headings?: MarkdownHeading[];
+	enabled?: boolean;
+}
+
+const { headings = [], enabled = false } = Astro.props;
+
+let minDepth = 10;
+for (const heading of headings) {
+	minDepth = Math.min(minDepth, heading.depth);
+}
+
+const maxLevel = siteConfig.toc.depth;
+const items = headings.filter((heading) => heading.depth < minDepth + maxLevel);
+const hasToc = enabled && items.length > 0;
+
+const cleanText = (text: string) =>
+	text.replace(/#$/, "").trim() || i18n(I18nKey.untitled);
+
+const firstTitle =
+	items.length > 0 ? cleanText(items[0].text) : i18n(I18nKey.toc);
+---
+
+<!--
+	Mobile table of contents: a fixed one-line bar showing the current section,
+	which expands into a bottom sheet with the full list.
+
+	It lives inside the `main` element, which is a Swup container, so the whole
+	widget is replaced together with the page and disappears on its own when
+	navigating to a page without a table of contents.
+-->
+<div id="toc-mobile">
+    {hasToc && (
+        <>
+            <div id="toc-mobile-backdrop"></div>
+
+            <div id="toc-mobile-panel" aria-hidden="true" inert aria-label={i18n(I18nKey.toc)}>
+                <div class="toc-mobile-header">
+                    <span class="flex items-center gap-2 font-bold text-75">
+                        <Icon name="material-symbols:list-rounded" class="text-[1.25rem] text-[var(--primary)]"></Icon>
+                        {i18n(I18nKey.toc)}
+                    </span>
+                    <button type="button" id="toc-mobile-close" aria-label={i18n(I18nKey.toc)}
+                            class="btn-plain w-8 h-8 rounded-lg">
+                        <Icon name="material-symbols:close-rounded" class="text-[1.25rem]"></Icon>
+                    </button>
+                </div>
+
+                <nav class="toc-mobile-list hide-scrollbar" aria-label={i18n(I18nKey.toc)}>
+                    {items.map((heading) => (
+                        <a href={`#${heading.slug}`}
+                           class:list={["toc-mobile-link text-50",
+                               { "toc-mobile-link-sub": heading.depth === minDepth + 1 },
+                               { "toc-mobile-link-sub2": heading.depth === minDepth + 2 }]}>
+                            <span class="toc-mobile-dot"></span>
+                            <span class="truncate">{cleanText(heading.text)}</span>
+                        </a>
+                    ))}
+                </nav>
+
+                <div class="toc-mobile-footer">
+                    <button type="button" id="toc-mobile-top" class="btn-plain w-full h-10 rounded-lg text-sm gap-1.5">
+                        <Icon name="material-symbols:keyboard-arrow-up-rounded" class="text-[1.25rem]"></Icon>
+                        {i18n(I18nKey.backToTop)}
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" id="toc-mobile-bar" aria-expanded="false" aria-controls="toc-mobile-panel">
+                <Icon name="material-symbols:list-rounded" class="text-[1.25rem] text-[var(--primary)] shrink-0"></Icon>
+                <span id="toc-mobile-current">{firstTitle}</span>
+                <Icon name="material-symbols:keyboard-arrow-up-rounded" class="text-[1.25rem] text-50 shrink-0"></Icon>
+            </button>
+        </>
+    )}
+</div>
+
+<style>
+    #toc-mobile-bar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        height: calc(3rem + env(safe-area-inset-bottom));
+        padding: 0 1rem env(safe-area-inset-bottom);
+        background: var(--card-bg);
+        border-top: 1px dashed var(--line-divider);
+        transition: background 0.2s;
+    }
+    #toc-mobile-current {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: left;
+        font-size: 0.875rem;
+        color: var(--btn-content);
+        opacity: 0.75;
+    }
+
+    #toc-mobile-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: rgb(0 0 0 / 0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+    }
+    #toc-mobile-backdrop.is-open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    #toc-mobile-panel {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        max-height: 70vh;
+        transform: translateY(101%);
+        transition: transform 0.3s ease;
+        border-radius: var(--radius-large) var(--radius-large) 0 0;
+        background: var(--card-bg);
+        box-shadow: 0 -8px 32px rgb(0 0 0 / 0.12);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    #toc-mobile-panel.is-open {
+        transform: translateY(0);
+    }
+
+    .toc-mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        height: 3rem;
+        padding: 0 0.75rem 0 1rem;
+        border-bottom: 1px dashed var(--line-divider);
+    }
+    .toc-mobile-list {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 0.5rem;
+    }
+    .toc-mobile-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 0.75rem;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+    }
+    .toc-mobile-link-sub {
+        margin-left: 0.75rem;
+    }
+    .toc-mobile-link-sub2 {
+        margin-left: 1.5rem;
+    }
+    .toc-mobile-link:active,
+    .toc-mobile-link.is-active {
+        color: var(--primary);
+        background: var(--toc-btn-hover);
+    }
+    .toc-mobile-link.is-active .toc-mobile-dot {
+        background: var(--primary);
+    }
+    .toc-mobile-dot {
+        flex-shrink: 0;
+        width: 0.375rem;
+        height: 0.375rem;
+        border-radius: 9999px;
+        background: var(--toc-badge-bg);
+    }
+    .toc-mobile-footer {
+        flex-shrink: 0;
+        padding: 0.5rem;
+        border-top: 1px dashed var(--line-divider);
+    }
+
+    @media (min-width: 1024px) {
+        #toc-mobile {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+	type MobileTocState = {
+		links: HTMLAnchorElement[];
+		headings: HTMLElement[];
+		label: HTMLElement | null;
+	};
+
+	let state: MobileTocState | null = null;
+	let ticking = false;
+
+	// The widget is replaced by Swup on every visit, so the elements have to be
+	// queried again after each navigation.
+	function refresh() {
+		const root = document.getElementById("toc-mobile");
+		if (!root) {
+			state = null;
+			return;
+		}
+
+		const links = Array.from(
+			root.querySelectorAll<HTMLAnchorElement>(
+				"#toc-mobile-panel a[href^='#']",
+			),
+		);
+		const headings: HTMLElement[] = [];
+		const validLinks: HTMLAnchorElement[] = [];
+		for (const link of links) {
+			const id = decodeURIComponent((link.hash || "").slice(1));
+			const heading = id ? document.getElementById(id) : null;
+			if (heading) {
+				validLinks.push(link);
+				headings.push(heading);
+			}
+		}
+
+		state = {
+			links: validLinks,
+			headings,
+			label: root.querySelector("#toc-mobile-current"),
+		};
+	}
+
+	function headingTitle(element: HTMLElement) {
+		return (element.textContent || "").replace(/#$/, "").trim();
+	}
+
+	// Highlight the section that is currently being read.
+	function updateCurrent() {
+		if (!state || !state.headings.length) return;
+
+		const offset = 120;
+		let index = -1;
+		for (let i = 0; i < state.headings.length; i++) {
+			if (state.headings[i].getBoundingClientRect().top - offset <= 0) {
+				index = i;
+			} else {
+				break;
+			}
+		}
+
+		// Above the first heading nothing matches yet, so highlight the first entry.
+		if (index < 0) index = 0;
+
+		const title = headingTitle(state.headings[index]);
+		if (state.label && title) state.label.textContent = title;
+
+		state.links.forEach((link, i) => {
+			link.classList.toggle("is-active", i === index);
+		});
+	}
+
+	function setOpen(open: boolean) {
+		const panel = document.getElementById("toc-mobile-panel");
+		const backdrop = document.getElementById("toc-mobile-backdrop");
+		const bar = document.getElementById("toc-mobile-bar");
+		if (!panel || !backdrop) return;
+
+		panel.classList.toggle("is-open", open);
+		backdrop.classList.toggle("is-open", open);
+		panel.setAttribute("aria-hidden", String(!open));
+		panel.toggleAttribute("inert", !open);
+		bar?.setAttribute("aria-expanded", String(open));
+
+		if (open) {
+			// Bring the current entry into view inside the list (not by scrolling the page).
+			const list = panel.querySelector<HTMLElement>(".toc-mobile-list");
+			const active = list?.querySelector<HTMLElement>(".is-active");
+			if (list && active) {
+				list.scrollTop = Math.max(
+					0,
+					active.offsetTop - list.clientHeight / 2 + active.clientHeight / 2,
+				);
+			}
+		}
+	}
+
+	window.addEventListener(
+		"scroll",
+		() => {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(() => {
+				ticking = false;
+				updateCurrent();
+			});
+		},
+		{ passive: true },
+	);
+
+	document.addEventListener("click", (event) => {
+		const target = event.target as Element | null;
+		if (!target) return;
+
+		if (target.closest("#toc-mobile-bar")) {
+			const panel = document.getElementById("toc-mobile-panel");
+			setOpen(!panel?.classList.contains("is-open"));
+			return;
+		}
+		if (
+			target.closest("#toc-mobile-close") ||
+			target.closest("#toc-mobile-backdrop")
+		) {
+			setOpen(false);
+			return;
+		}
+		if (target.closest("#toc-mobile-top")) {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+			setOpen(false);
+			return;
+		}
+		if (target.closest("#toc-mobile-panel a[href^='#']")) {
+			setOpen(false);
+		}
+	});
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape") setOpen(false);
+	});
+
+	// `@swup/astro` emits the Astro navigation events on every visit.
+	document.addEventListener("astro:page-load", () => {
+		refresh();
+		updateCurrent();
+	});
+	document.addEventListener("astro:before-swap", () => setOpen(false));
+
+	// The script is bundled as a module, so it is evaluated only once per
+	// session. It may be loaded after the first navigation, therefore the
+	// initial state is set up right away as well.
+	refresh();
+	updateCurrent();
+</script>

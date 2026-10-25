@@ -1,8 +1,11 @@
 ---
 import BackToTop from "@components/control/BackToTop.astro";
+import MobileToc from "@components/control/MobileToc.astro";
 import Footer from "@components/Footer.astro";
 import Navbar from "@components/Navbar.astro";
 import SideBar from "@components/widget/SideBar.astro";
+import I18nKey from "@i18n/i18nKey";
+import { i18n } from "@i18n/translation";
 import type { MarkdownHeading } from "astro";
 import { Icon } from "astro-icon/components";
 import ImageWrapper from "../components/misc/ImageWrapper.astro";
@@ -22,6 +25,7 @@ interface Props {
 	lang?: string;
 	setOGTypeArticle?: boolean;
 	headings?: MarkdownHeading[];
+	postLayout?: boolean;
 }
 
 const {
@@ -31,10 +35,17 @@ const {
 	lang,
 	setOGTypeArticle,
 	headings = [],
+	postLayout = false,
 } = Astro.props;
 const hasBannerCredit =
 	siteConfig.banner.enable && siteConfig.banner.credit.enable;
 const hasBannerLink = !!siteConfig.banner.credit.url;
+
+// The post layout drops the sidebar to make room for the table of contents.
+const usePostLayout = postLayout && siteConfig.toc.enable;
+// Posts without any heading have nothing to navigate, so they keep the same
+// reading width but stay centered instead of leaving an empty column behind.
+const hasTocItems = usePostLayout && headings.length > 0;
 
 const mainPanelTop = siteConfig.banner.enable
 	? `calc(${BANNER_HEIGHT}vh - ${MAIN_PANEL_OVERLAPS_BANNER_HEIGHT}rem)`
@@ -63,8 +74,14 @@ const mainPanelTop = siteConfig.banner.enable
 <div class="absolute w-full z-30 pointer-events-none" style={`top: ${mainPanelTop}`}>
     <!-- The pointer-events-none here prevent blocking the click event of the TOC -->
     <div class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto">
-        <div id="main-grid" class="transition duration-700 w-full left-0 right-0 grid grid-cols-[17.5rem_auto] grid-rows-[auto_1fr_auto] lg:grid-rows-[auto]
-    mx-auto gap-4 px-0 md:px-4"
+        <div id="main-grid" class:list={[
+            "transition duration-700 w-full left-0 right-0 grid grid-cols-[17.5rem_auto] grid-rows-[auto_1fr_auto] lg:grid-rows-[auto] mx-auto gap-4 px-0 md:px-4",
+            usePostLayout ? "lg:grid-cols-[minmax(0,1fr)]" : "",
+            // Leave room for the fixed mobile table of contents bar
+            hasTocItems
+                ? "pb-[calc(3.5rem+env(safe-area-inset-bottom))] lg:pb-0"
+                : "",
+        ]}
         >
             <!-- Banner image credit -->
             {hasBannerCredit && <a href={siteConfig.banner.credit.url} id="banner-credit" target="_blank" rel="noopener" aria-label="Visit image source"
@@ -80,10 +97,22 @@ const mainPanelTop = siteConfig.banner.enable
             </a>}
 
 
-            <SideBar class="mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation" headings={headings}></SideBar>
+            {!usePostLayout && <SideBar class="mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation" headings={headings}></SideBar>}
 
-            <main id="swup-container" class="transition-swup-fade col-span-2 lg:col-span-1 overflow-hidden">
-                <div id="content-wrapper" class="onload-animation">
+            <main id="swup-container" class:list={[
+                "transition-swup-fade col-span-2 lg:col-span-1",
+                usePostLayout
+                    ? hasTocItems
+                        ? "lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] xl:grid-cols-[minmax(0,1fr)_17.5rem] lg:gap-4"
+                        : "lg:grid lg:grid-cols-[minmax(0,1fr)]"
+                    : "",
+            ]}>
+                <div id="content-wrapper" class:list={[
+                    "onload-animation min-w-0 overflow-hidden",
+                    usePostLayout && !hasTocItems
+                        ? "lg:mx-auto lg:max-w-[calc(var(--page-width)-17.5rem-1rem)]"
+                        : "",
+                ]}>
                     <!-- the overflow-hidden here prevent long text break the layout-->
                     <!-- make id different from windows.swup global property -->
                     <slot></slot>
@@ -91,6 +120,29 @@ const mainPanelTop = siteConfig.banner.enable
                         <Footer></Footer>
                     </div>
                 </div>
+
+                <!--
+                    The table of contents lives inside `main`, which is a Swup container,
+                    so it is replaced together with the page and disappears on its own
+                    when navigating to a page without a table of contents.
+                -->
+                {hasTocItems && (
+                    <aside id="toc-column" class="hidden lg:block">
+                        <div id="toc-inner-wrapper" class="card-base sticky top-[4.5rem] max-h-[calc(100vh-8rem)] overflow-y-auto overflow-x-hidden hide-scrollbar">
+                            <div class="text-sm font-bold text-75 px-3 pt-3 pb-1">
+                                {i18n(I18nKey.toc)}
+                            </div>
+                            <div id="toc" class="w-full transition-swup-fade">
+                                <div class="h-1 w-full"></div>
+                                <TOC headings={headings}></TOC>
+                                <div class="h-3 w-full"></div>
+                            </div>
+                        </div>
+                    </aside>
+                )}
+
+                <!-- Mobile table of contents, only shown on narrow screens -->
+                {hasTocItems && <MobileToc headings={headings} enabled={hasTocItems}></MobileToc>}
             </main>
 
             <div class="footer col-span-2 onload-animation block lg:hidden">
@@ -102,24 +154,14 @@ const mainPanelTop = siteConfig.banner.enable
     </div>
 </div>
 
-<!-- The things that should be under the banner, only the TOC for now -->
-<div class="absolute w-full z-0 hidden 2xl:block">
-    <div class="relative max-w-[var(--page-width)] mx-auto">
-        <!-- TOC component -->
-        {siteConfig.toc.enable && <div id="toc-wrapper" class:list={["hidden lg:block transition absolute top-0 -right-[var(--toc-width)] w-[var(--toc-width)] items-center",
-            {"toc-hide": siteConfig.banner.enable}]}
-        >
-            <div id="toc-inner-wrapper" class="fixed top-14 w-[var(--toc-width)] h-[calc(100vh_-_20rem)] overflow-y-scroll overflow-x-hidden hide-scrollbar">
-                <div id="toc" class="w-full h-full transition-swup-fade ">
-                    <div class="h-8 w-full"></div>
-                    <TOC headings={headings}></TOC>
-                    <div class="h-8 w-full"></div>
-                </div>
-            </div>
-        </div>}
-
-        <!-- #toc needs to exist for Swup to work normally -->
-        {!siteConfig.toc.enable && <div id="toc"></div>}
-    </div>
-</div>
+<style>
+    /*
+        The native table of contents fades its edges with a mask, which is meant
+        for the borderless version. The card brings its own boundary, so the
+        mask is not needed here.
+    */
+    #toc-inner-wrapper {
+        mask-image: none;
+    }
+</style>
 </Layout>

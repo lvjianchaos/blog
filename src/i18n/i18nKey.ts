@@ -9,6 +9,8 @@ enum I18nKey {
 	recentPosts = "recentPosts",
 
 	comments = "comments",
+	toc = "toc",
+	backToTop = "backToTop",
 
 	untitled = "untitled",
 	uncategorized = "uncategorized",

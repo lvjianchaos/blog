@@ -11,6 +11,9 @@ export const th: Translation = {
 	[Key.categories]: "หมวดหมู่",
 	[Key.recentPosts]: "โพสต์ล่าสุด",
 
+	[Key.toc]: "สารบัญ",
+	[Key.backToTop]: "กลับไปด้านบน",
+
 	[Key.comments]: "ความคิดเห็น",
 
 	[Key.untitled]: "ไม่ได้ตั้งชื่อ",
