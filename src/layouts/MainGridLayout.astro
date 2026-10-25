@@ -74,15 +74,30 @@ const mainPanelTop = siteConfig.banner.enable
 <div class="absolute w-full z-30 pointer-events-none" style={`top: ${mainPanelTop}`}>
     <!-- The pointer-events-none here prevent blocking the click event of the TOC -->
     <div class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto">
-        <div id="main-grid" class:list={[
-            "transition duration-700 w-full left-0 right-0 grid grid-cols-[17.5rem_auto] grid-rows-[auto_1fr_auto] lg:grid-rows-[auto] mx-auto gap-4 px-0 md:px-4",
-            usePostLayout ? "lg:grid-cols-[minmax(0,1fr)]" : "",
-            // Leave room for the fixed mobile table of contents bar
-            hasTocItems
-                ? "pb-[calc(3.5rem+env(safe-area-inset-bottom))] lg:pb-0"
-                : "",
-        ]}
-        >
+        <!--
+            The grid lives inside the Swup container. A post page uses a different
+            layout than the other pages (no sidebar, but a table of contents), and
+            that difference has to be replaced together with the page content,
+            otherwise the layout of the previous page would be kept.
+        -->
+        <main id="swup-container" class="transition-swup-fade">
+            <div id="main-grid" class:list={[
+                "transition duration-700 w-full left-0 right-0 grid grid-cols-[17.5rem_auto] grid-rows-[auto_1fr_auto] lg:grid-rows-[auto] mx-auto gap-4 px-0 md:px-4",
+                // `overflow-hidden` keeps long lines (e.g. bare URLs) inside the
+                // layout. It has to be released on large screens, otherwise the
+                // element becomes the scroll container of the sticky TOC.
+                "overflow-hidden lg:overflow-visible",
+                usePostLayout
+                    ? hasTocItems
+                        ? "lg:grid-cols-[minmax(0,1fr)_15rem] xl:grid-cols-[minmax(0,1fr)_17.5rem]"
+                        : "lg:grid-cols-[minmax(0,1fr)]"
+                    : "",
+                // Leave room for the fixed mobile table of contents bar
+                hasTocItems
+                    ? "pb-[calc(3.5rem+env(safe-area-inset-bottom))] lg:pb-0"
+                    : "",
+            ]}
+            >
             <!-- Banner image credit -->
             {hasBannerCredit && <a href={siteConfig.banner.credit.url} id="banner-credit" target="_blank" rel="noopener" aria-label="Visit image source"
                                    class:list={["group onload-animation transition-all absolute flex justify-center items-center rounded-full " +
@@ -97,22 +112,10 @@ const mainPanelTop = siteConfig.banner.enable
             </a>}
 
 
-            {!usePostLayout && <SideBar class="mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation" headings={headings}></SideBar>}
+                {!usePostLayout && <SideBar class="mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation" headings={headings}></SideBar>}
 
-            <main id="swup-container" class:list={[
-                "transition-swup-fade col-span-2 lg:col-span-1",
-                // `overflow-hidden` keeps long lines (e.g. bare URLs) inside the
-                // layout. It has to be released on large screens, otherwise the
-                // element becomes the scroll container of the sticky TOC.
-                "overflow-hidden lg:overflow-visible",
-                usePostLayout
-                    ? hasTocItems
-                        ? "lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] xl:grid-cols-[minmax(0,1fr)_17.5rem] lg:gap-4"
-                        : "lg:grid lg:grid-cols-[minmax(0,1fr)]"
-                    : "",
-            ]}>
                 <div id="content-wrapper" class:list={[
-                    "onload-animation min-w-0 overflow-hidden",
+                    "col-span-2 lg:col-span-1 onload-animation min-w-0 overflow-hidden",
                     usePostLayout && !hasTocItems
                         ? "lg:mx-auto lg:max-w-[calc(var(--page-width)-17.5rem-1rem)]"
                         : "",
@@ -126,12 +129,12 @@ const mainPanelTop = siteConfig.banner.enable
                 </div>
 
                 <!--
-                    The table of contents lives inside `main`, which is a Swup container,
-                    so it is replaced together with the page and disappears on its own
-                    when navigating to a page without a table of contents.
+                    The table of contents lives inside the Swup container as well,
+                    so it is replaced together with the page and disappears on its
+                    own when navigating to a page without a table of contents.
                 -->
                 {hasTocItems && (
-                    <aside id="toc-column" class="hidden lg:block">
+                    <aside id="toc-column" class="hidden lg:block lg:col-start-2 lg:row-start-1">
                         <div id="toc-inner-wrapper" class="card-base sticky top-[4.5rem] max-h-[calc(100vh-8rem)] overflow-y-auto overflow-x-hidden hide-scrollbar">
                             <div class="text-sm font-bold text-75 px-3 pt-3 pb-1">
                                 {i18n(I18nKey.toc)}
@@ -147,12 +150,12 @@ const mainPanelTop = siteConfig.banner.enable
 
                 <!-- Mobile table of contents, only shown on narrow screens -->
                 {hasTocItems && <MobileToc headings={headings} enabled={hasTocItems}></MobileToc>}
-            </main>
 
-            <div class="footer col-span-2 onload-animation block lg:hidden">
-                <Footer></Footer>
+                <div class="footer col-span-2 onload-animation block lg:hidden">
+                    <Footer></Footer>
+                </div>
             </div>
-        </div>
+        </main>
 
         <BackToTop></BackToTop>
     </div>
