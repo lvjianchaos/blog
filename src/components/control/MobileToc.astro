@@ -205,154 +205,175 @@ const firstTitle =
 </style>
 
 <script>
-	type MobileTocState = {
-		links: HTMLAnchorElement[];
-		headings: HTMLElement[];
-		label: HTMLElement | null;
-	};
+	/*
+		Run-once guard: `@swup/astro` installs `SwupScriptsPlugin`, which
+		re-creates and re-executes every *inline* script after each navigation.
+		This script has no import, so Astro inlines it into the page and it is
+		executed again on every visit. A second copy would attach a second set
+		of document listeners, so one tap toggled the sheet open and straight
+		back to closed and the bar looked dead.
 
-	let state: MobileTocState | null = null;
-	let ticking = false;
-
-	// The widget is replaced by Swup on every visit, so the elements have to be
-	// queried again after each navigation.
-	function refresh() {
-		const root = document.getElementById("toc-mobile");
-		if (!root) {
-			state = null;
+		Everything is therefore set up only once, and the state is refreshed
+		on every navigation instead.
+	*/
+	(() => {
+		const scope = window as unknown as { __fuwariMobileToc?: boolean };
+		if (scope.__fuwariMobileToc) {
 			return;
 		}
+		scope.__fuwariMobileToc = true;
 
-		const links = Array.from(
-			root.querySelectorAll<HTMLAnchorElement>(
-				"#toc-mobile-panel a[href^='#']",
-			),
-		);
-		const headings: HTMLElement[] = [];
-		const validLinks: HTMLAnchorElement[] = [];
-		for (const link of links) {
-			const id = decodeURIComponent((link.hash || "").slice(1));
-			const heading = id ? document.getElementById(id) : null;
-			if (heading) {
-				validLinks.push(link);
-				headings.push(heading);
-			}
-		}
-
-		state = {
-			links: validLinks,
-			headings,
-			label: root.querySelector("#toc-mobile-current"),
+		type MobileTocState = {
+			links: HTMLAnchorElement[];
+			headings: HTMLElement[];
+			label: HTMLElement | null;
 		};
-	}
 
-	function headingTitle(element: HTMLElement) {
-		return (element.textContent || "").replace(/#$/, "").trim();
-	}
+		let state: MobileTocState | null = null;
+		let ticking = false;
 
-	// Highlight the section that is currently being read.
-	function updateCurrent() {
-		if (!state || !state.headings.length) return;
-
-		const offset = 120;
-		let index = -1;
-		for (let i = 0; i < state.headings.length; i++) {
-			if (state.headings[i].getBoundingClientRect().top - offset <= 0) {
-				index = i;
-			} else {
-				break;
+		// The widget is replaced by Swup on every visit, so the elements have
+		// to be queried again after each navigation.
+		function refresh() {
+			const root = document.getElementById("toc-mobile");
+			if (!root) {
+				state = null;
+				return;
 			}
+
+			const links = Array.from(
+				root.querySelectorAll<HTMLAnchorElement>(
+					"#toc-mobile-panel a[href^='#']",
+				),
+			);
+			const headings: HTMLElement[] = [];
+			const validLinks: HTMLAnchorElement[] = [];
+			for (const link of links) {
+				const id = decodeURIComponent((link.hash || "").slice(1));
+				const heading = id ? document.getElementById(id) : null;
+				if (heading) {
+					validLinks.push(link);
+					headings.push(heading);
+				}
+			}
+
+			state = {
+				links: validLinks,
+				headings,
+				label: root.querySelector("#toc-mobile-current"),
+			};
 		}
 
-		// Above the first heading nothing matches yet, so highlight the first entry.
-		if (index < 0) index = 0;
-
-		const title = headingTitle(state.headings[index]);
-		if (state.label && title) state.label.textContent = title;
-
-		state.links.forEach((link, i) => {
-			link.classList.toggle("is-active", i === index);
-		});
-	}
-
-	function setOpen(open: boolean) {
-		const panel = document.getElementById("toc-mobile-panel");
-		const backdrop = document.getElementById("toc-mobile-backdrop");
-		const bar = document.getElementById("toc-mobile-bar");
-		if (!panel || !backdrop) return;
-
-		panel.classList.toggle("is-open", open);
-		backdrop.classList.toggle("is-open", open);
-		panel.setAttribute("aria-hidden", String(!open));
-		panel.toggleAttribute("inert", !open);
-		bar?.setAttribute("aria-expanded", String(open));
-
-		if (open) {
-			// Bring the current entry into view inside the list (not by scrolling the page).
-			const list = panel.querySelector<HTMLElement>(".toc-mobile-list");
-			const active = list?.querySelector<HTMLElement>(".is-active");
-			if (list && active) {
-				list.scrollTop = Math.max(
-					0,
-					active.offsetTop - list.clientHeight / 2 + active.clientHeight / 2,
-				);
-			}
+		function headingTitle(element: HTMLElement) {
+			return (element.textContent || "").replace(/#$/, "").trim();
 		}
-	}
 
-	window.addEventListener(
-		"scroll",
-		() => {
-			if (ticking) return;
-			ticking = true;
-			requestAnimationFrame(() => {
-				ticking = false;
-				updateCurrent();
+		// Highlight the section that is currently being read.
+		function updateCurrent() {
+			if (!state || !state.headings.length) return;
+
+			const offset = 120;
+			let index = -1;
+			for (let i = 0; i < state.headings.length; i++) {
+				if (state.headings[i].getBoundingClientRect().top - offset <= 0) {
+					index = i;
+				} else {
+					break;
+				}
+			}
+
+			// Above the first heading nothing matches yet, so highlight the first entry.
+			if (index < 0) index = 0;
+
+			const title = headingTitle(state.headings[index]);
+			if (state.label && title) state.label.textContent = title;
+
+			state.links.forEach((link, i) => {
+				link.classList.toggle("is-active", i === index);
 			});
-		},
-		{ passive: true },
-	);
+		}
 
-	document.addEventListener("click", (event) => {
-		const target = event.target as Element | null;
-		if (!target) return;
-
-		if (target.closest("#toc-mobile-bar")) {
+		function setOpen(open: boolean) {
 			const panel = document.getElementById("toc-mobile-panel");
-			setOpen(!panel?.classList.contains("is-open"));
-			return;
-		}
-		if (
-			target.closest("#toc-mobile-close") ||
-			target.closest("#toc-mobile-backdrop")
-		) {
-			setOpen(false);
-			return;
-		}
-		if (target.closest("#toc-mobile-top")) {
-			window.scrollTo({ top: 0, behavior: "smooth" });
-			setOpen(false);
-			return;
-		}
-		if (target.closest("#toc-mobile-panel a[href^='#']")) {
-			setOpen(false);
-		}
-	});
+			const backdrop = document.getElementById("toc-mobile-backdrop");
+			const bar = document.getElementById("toc-mobile-bar");
+			if (!panel || !backdrop) return;
 
-	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape") setOpen(false);
-	});
+			panel.classList.toggle("is-open", open);
+			backdrop.classList.toggle("is-open", open);
+			panel.setAttribute("aria-hidden", String(!open));
+			panel.toggleAttribute("inert", !open);
+			bar?.setAttribute("aria-expanded", String(open));
 
-	// `@swup/astro` emits the Astro navigation events on every visit.
-	document.addEventListener("astro:page-load", () => {
+			if (open) {
+				// Bring the current entry into view inside the list (not by scrolling the page).
+				const list = panel.querySelector<HTMLElement>(".toc-mobile-list");
+				const active = list?.querySelector<HTMLElement>(".is-active");
+				if (list && active) {
+					list.scrollTop = Math.max(
+						0,
+						active.offsetTop -
+							list.clientHeight / 2 +
+							active.clientHeight / 2,
+					);
+				}
+			}
+		}
+
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (ticking) return;
+				ticking = true;
+				requestAnimationFrame(() => {
+					ticking = false;
+					updateCurrent();
+				});
+			},
+			{ passive: true },
+		);
+
+		document.addEventListener("click", (event) => {
+			const target = event.target as Element | null;
+			if (!target) return;
+
+			if (target.closest("#toc-mobile-bar")) {
+				const panel = document.getElementById("toc-mobile-panel");
+				setOpen(!panel?.classList.contains("is-open"));
+				return;
+			}
+			if (
+				target.closest("#toc-mobile-close") ||
+				target.closest("#toc-mobile-backdrop")
+			) {
+				setOpen(false);
+				return;
+			}
+			if (target.closest("#toc-mobile-top")) {
+				window.scrollTo({ top: 0, behavior: "smooth" });
+				setOpen(false);
+				return;
+			}
+			if (target.closest("#toc-mobile-panel a[href^='#']")) {
+				setOpen(false);
+			}
+		});
+
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape") setOpen(false);
+		});
+
+		// `@swup/astro` emits the Astro navigation events on every visit.
+		document.addEventListener("astro:page-load", () => {
+			refresh();
+			updateCurrent();
+		});
+		document.addEventListener("astro:before-swap", () => setOpen(false));
+
+		// The script may be executed again by Swup on a later navigation, in
+		// which case the guard above returns early. The state is therefore
+		// refreshed through the `astro:page-load` event instead.
 		refresh();
 		updateCurrent();
-	});
-	document.addEventListener("astro:before-swap", () => setOpen(false));
-
-	// The script is bundled as a module, so it is evaluated only once per
-	// session. It may be loaded after the first navigation, therefore the
-	// initial state is set up right away as well.
-	refresh();
-	updateCurrent();
+	})();
 </script>
