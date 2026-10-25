@@ -204,6 +204,12 @@ class TableOfContents extends HTMLElement {
         // wait for the onload animation to finish, which makes the `getBoundingClientRect` return correct values
         const element = document.querySelector('.prose');
         if (element) {
+            // The animation is short (300ms) while this script is loaded as a
+            // deferred module, so it may already be over when the element gets
+            // upgraded and the event would never arrive. Initializing right
+            // away keeps the highlighting working, the listener below only
+            // recalculates the positions once the animation has finished.
+            this.init();
             element.addEventListener('animationend', () => {
                 this.init();
             }, { once: true });

@@ -101,6 +101,10 @@ const mainPanelTop = siteConfig.banner.enable
 
             <main id="swup-container" class:list={[
                 "transition-swup-fade col-span-2 lg:col-span-1",
+                // `overflow-hidden` keeps long lines (e.g. bare URLs) inside the
+                // layout. It has to be released on large screens, otherwise the
+                // element becomes the scroll container of the sticky TOC.
+                "overflow-hidden lg:overflow-visible",
                 usePostLayout
                     ? hasTocItems
                         ? "lg:grid lg:grid-cols-[minmax(0,1fr)_15rem] xl:grid-cols-[minmax(0,1fr)_17.5rem] lg:gap-4"
