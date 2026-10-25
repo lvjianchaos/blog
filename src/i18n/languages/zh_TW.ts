@@ -11,6 +11,9 @@ export const zh_TW: Translation = {
 	[Key.categories]: "分類",
 	[Key.recentPosts]: "最新文章",
 
+	[Key.friends]: "友鏈",
+	[Key.noFriends]: "暫無友鏈",
+
 	[Key.toc]: "目錄",
 	[Key.backToTop]: "回到頂部",
 

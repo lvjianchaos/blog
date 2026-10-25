@@ -11,6 +11,9 @@ export const ko: Translation = {
 	[Key.categories]: "카테고리",
 	[Key.recentPosts]: "최근 게시물",
 
+	[Key.friends]: "친구",
+	[Key.noFriends]: "아직 친구가 없습니다",
+
 	[Key.toc]: "목차",
 	[Key.backToTop]: "맨 위로",
 

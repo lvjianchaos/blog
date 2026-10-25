@@ -11,6 +11,9 @@ export const es: Translation = {
 	[Key.categories]: "Categorías",
 	[Key.recentPosts]: "Publicaciones recientes",
 
+	[Key.friends]: "Amigos",
+	[Key.noFriends]: "Aún no hay amigos",
+
 	[Key.toc]: "Índice",
 	[Key.backToTop]: "Volver arriba",
 

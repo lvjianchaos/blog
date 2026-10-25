@@ -11,6 +11,9 @@ export const ja: Translation = {
 	[Key.categories]: "カテゴリ",
 	[Key.recentPosts]: "最近の投稿",
 
+	[Key.friends]: "フレンド",
+	[Key.noFriends]: "まだ友達がいません",
+
 	[Key.toc]: "目次",
 	[Key.backToTop]: "トップへ戻る",
 

@@ -11,6 +11,9 @@ export const en: Translation = {
 	[Key.categories]: "Categories",
 	[Key.recentPosts]: "Recent Posts",
 
+	[Key.friends]: "Friends",
+	[Key.noFriends]: "No friends yet",
+
 	[Key.toc]: "Contents",
 	[Key.backToTop]: "Back to top",
 

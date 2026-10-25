@@ -11,6 +11,9 @@ export const th: Translation = {
 	[Key.categories]: "หมวดหมู่",
 	[Key.recentPosts]: "โพสต์ล่าสุด",
 
+	[Key.friends]: "เพื่อน",
+	[Key.noFriends]: "ยังไม่มีเพื่อน",
+
 	[Key.toc]: "สารบัญ",
 	[Key.backToTop]: "กลับไปด้านบน",
 

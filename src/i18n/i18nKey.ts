@@ -10,6 +10,8 @@ enum I18nKey {
 
 	comments = "comments",
 	toc = "toc",
+	friends = "friends",
+	noFriends = "noFriends",
 	backToTop = "backToTop",
 
 	untitled = "untitled",
