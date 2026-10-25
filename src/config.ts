@@ -1,6 +1,5 @@
 import type {
 	ExpressiveCodeConfig,
-	GiscusConfig,
 	LicenseConfig,
 	NavBarConfig,
 	ProfileConfig,
@@ -18,7 +17,7 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true,
-		src: "https://cdn.jsdelivr.net/gh/lvjianchaos/Images/banner.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		src: "assets/images/banner.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 		position: "bottom", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: false, // Display the credit text of the banner image
@@ -28,14 +27,14 @@ export const siteConfig: SiteConfig = {
 	},
 	toc: {
 		enable: true, // Display the table of contents on the right side of the post
-		depth: 2, // Maximum heading depth to show in the table, from 1 to 3
+		depth: 3, // Maximum heading depth to show in the table, from 1 to 3
 	},
 	favicon: [
 		// Leave this array empty to use the default favicon
 		{
-			src: "https://cdn.jsdelivr.net/gh/lvjianchaos/Images/avatar.png", // Path of the favicon, relative to the /public directory
-			// theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
-			// sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
+			src: "/favicon/icon.png", // Path of the favicon, relative to the /public directory
+			// theme: "light", // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
+			// sizes: "32x32", // (Optional) Size of the favicon, set only if you have favicons of different sizes
 		},
 	],
 };
@@ -45,7 +44,6 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
-		LinkPreset.Friends,
 		{
 			name: "GitHub",
 			url: "https://github.com/lvjianchaos/blog", // Internal links should not include the base path, as it is automatically added
@@ -55,15 +53,25 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "https://cdn.jsdelivr.net/gh/lvjianchaos/Images/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar: "assets/images/avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Chaos",
 	bio: "人世几回伤往事，山形依旧枕寒流。",
 	links: [
+		// {
+		// 	name: "Twitter",
+		// 	icon: "fa6-brands:twitter", // Visit https://icones.js.org/ for icon codes
+		// 	// You will need to install the corresponding icon set if it's not already included
+		// 	// `pnpm add @iconify-json/<icon-set-name>`
+		// 	url: "https://twitter.com",
+		// },
+		// {
+		// 	name: "Steam",
+		// 	icon: "fa6-brands:steam",
+		// 	url: "https://store.steampowered.com",
+		// },
 		{
 			name: "Bilibili",
-			icon: "fa6-brands:bilibili", // Visit https://icones.js.org/ for icon codes
-			// You will need to install the corresponding icon set if it's not already included
-			// `pnpm add @iconify-json/<icon-set-name>`
+			icon: "fa6-brands:bilibili",
 			url: "https://space.bilibili.com/475203421",
 		},
 		{
@@ -84,24 +92,4 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
-	// The minimum number of lines required to enable code folding. Set to 0 to disable code folding.
-	codeFold: {
-		minLines: 12,
-	},
-};
-
-export const giscusConfig: GiscusConfig = {
-	enable: true,
-	showTitle: true,
-	repo: "lvjianchaos/blog",
-	repoId: "R_kgDOQLfrkg",
-	category: "Blog Comments",
-	categoryId: "DIC_kwDOQLfrks4C48vl",
-	mapping: "pathname",
-	strict: "0",
-	reactionsEnabled: "1",
-	emitMetadata: "0",
-	inputPosition: "top",
-	lang: "zh-CN",
-	loading: "lazy",
 };

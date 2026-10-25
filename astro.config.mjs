@@ -1,5 +1,3 @@
-import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
@@ -26,51 +24,9 @@ import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
-/**
- * `lastmod` values for the sitemap, taken from each post's frontmatter
- * (`updated` first, then `published`). Using the build time instead would mark every
- * post as "just updated" on each deploy, which search engines learn to ignore.
- * Only three scalar fields are needed here, so the frontmatter is read with a
- * small regex instead of pulling in a YAML parser.
- */
-function getPostLastmods() {
-	const dir = join("src", "content", "posts");
-	const lastmods = {};
-
-	try {
-		for (const file of readdirSync(dir)) {
-			if (!file.endsWith(".md")) continue;
-
-			const source = readFileSync(join(dir, file), "utf8");
-			const frontmatter = source.split(/^---$/m)[1] ?? "";
-			const read = (key) => {
-				const match = frontmatter.match(new RegExp(`^${key}:\\s*(.+)$`, "m"));
-				return match ? match[1].replace(/^['"]|['"]$/g, "").trim() : "";
-			};
-
-			if (read("draft") === "true") continue;
-
-			const date = read("updated") || read("published");
-			if (!date) continue;
-
-			const parsed = new Date(date);
-			if (Number.isNaN(parsed.getTime())) continue;
-
-			lastmods[`/posts/${file.slice(0, -".md".length)}/`] =
-				parsed.toISOString();
-		}
-	} catch {
-		// The content directory is unavailable: build the sitemap without lastmod.
-	}
-
-	return lastmods;
-}
-
-const postLastmods = getPostLastmods();
-
 // https://astro.build/config
 export default defineConfig({
-	site: "https://blog.chaos-ljc.top",
+	site: "https://blog.chaos-ljc.top/",
 	base: "/",
 	trailingSlash: "always",
 	integrations: [
@@ -82,7 +38,7 @@ export default defineConfig({
 			animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
 			// the default value `transition-` cause transition delay
 			// when the Tailwind class `transition-all` is used
-			containers: ["main", "#toc", "#toc-mobile"],
+			containers: ["main", "#toc"],
 			smoothScrolling: true,
 			cache: true,
 			preload: true,
@@ -105,9 +61,7 @@ export default defineConfig({
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),
 				pluginLanguageBadge(),
-				pluginCustomCopyButton({
-					minLines: expressiveCodeConfig.codeFold?.minLines ?? 12,
-				}),
+				pluginCustomCopyButton(),
 			],
 			defaultProps: {
 				wrap: true,
@@ -147,12 +101,7 @@ export default defineConfig({
 			},
 		}),
 		svelte(),
-		sitemap({
-			serialize(item) {
-				const lastmod = postLastmods[new URL(item.url).pathname];
-				return lastmod ? { ...item, lastmod } : item;
-			},
-		}),
+		sitemap(),
 	],
 	markdown: {
 		remarkPlugins: [

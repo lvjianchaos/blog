@@ -29,6 +29,3 @@ yarn.lock
 # ide
 .idea
 *.iml
-
-# pi agent
-.memory/

@@ -5,7 +5,6 @@ export const ja: Translation = {
 	[Key.home]: "Home",
 	[Key.about]: "About",
 	[Key.archive]: "Archive",
-	[Key.friends]: "フレンド",
 	[Key.search]: "検索",
 
 	[Key.tags]: "タグ",
@@ -17,7 +16,6 @@ export const ja: Translation = {
 	[Key.untitled]: "タイトルなし",
 	[Key.uncategorized]: "カテゴリなし",
 	[Key.noTags]: "タグなし",
-	[Key.noFriends]: "まだ友達がいません",
 
 	[Key.wordCount]: "文字",
 	[Key.wordsCount]: "文字",
@@ -33,10 +31,6 @@ export const ja: Translation = {
 	[Key.systemMode]: "システム",
 
 	[Key.more]: "もっと",
-	[Key.toc]: "目次",
-	[Key.backToTop]: "トップへ戻る",
-	[Key.notFound]: "ページが見つかりません",
-	[Key.notFoundDesc]: "お探しのページは移動または削除された可能性があります。",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "公開日",

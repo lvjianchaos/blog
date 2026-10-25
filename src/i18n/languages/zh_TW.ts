@@ -5,7 +5,6 @@ export const zh_TW: Translation = {
 	[Key.home]: "首頁",
 	[Key.about]: "關於",
 	[Key.archive]: "彙整",
-	[Key.friends]: "友鏈",
 	[Key.search]: "搜尋",
 
 	[Key.tags]: "標籤",
@@ -17,7 +16,6 @@ export const zh_TW: Translation = {
 	[Key.untitled]: "無標題",
 	[Key.uncategorized]: "未分類",
 	[Key.noTags]: "無標籤",
-	[Key.noFriends]: "暫無友鏈",
 
 	[Key.wordCount]: "字",
 	[Key.wordsCount]: "字",
@@ -33,10 +31,6 @@ export const zh_TW: Translation = {
 	[Key.systemMode]: "跟隨系統",
 
 	[Key.more]: "更多",
-	[Key.toc]: "目錄",
-	[Key.backToTop]: "回到頂部",
-	[Key.notFound]: "頁面不存在",
-	[Key.notFoundDesc]: "你訪問的頁面可能已被移動或刪除。",
 
 	[Key.author]: "作者",
 	[Key.publishedAt]: "發佈於",

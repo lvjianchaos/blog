@@ -1,15 +1,12 @@
 ---
 import BackToTop from "@components/control/BackToTop.astro";
-import MobileToc from "@components/control/MobileToc.astro";
 import Footer from "@components/Footer.astro";
-import ImageWrapper from "@components/misc/ImageWrapper.astro";
 import Navbar from "@components/Navbar.astro";
 import SideBar from "@components/widget/SideBar.astro";
-import TOC from "@components/widget/TOC.astro";
-import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
 import type { MarkdownHeading } from "astro";
 import { Icon } from "astro-icon/components";
+import ImageWrapper from "../components/misc/ImageWrapper.astro";
+import TOC from "../components/widget/TOC.astro";
 import { siteConfig } from "../config";
 import {
 	BANNER_HEIGHT,
@@ -23,10 +20,6 @@ interface Props {
 	banner?: string;
 	description?: string;
 	lang?: string;
-	image?: string;
-	postLayout?: boolean;
-	noindex?: boolean;
-	noCanonical?: boolean;
 	setOGTypeArticle?: boolean;
 	headings?: MarkdownHeading[];
 }
@@ -36,14 +29,9 @@ const {
 	banner,
 	description,
 	lang,
-	image,
-	postLayout = false,
-	noindex = false,
-	noCanonical = false,
 	setOGTypeArticle,
 	headings = [],
 } = Astro.props;
-
 const hasBannerCredit =
 	siteConfig.banner.enable && siteConfig.banner.credit.enable;
 const hasBannerLink = !!siteConfig.banner.credit.url;
@@ -51,12 +39,9 @@ const hasBannerLink = !!siteConfig.banner.credit.url;
 const mainPanelTop = siteConfig.banner.enable
 	? `calc(${BANNER_HEIGHT}vh - ${MAIN_PANEL_OVERLAPS_BANNER_HEIGHT}rem)`
 	: "5.5rem";
-
-// The post layout (no sidebar, TOC on the right) only makes sense when the TOC is enabled.
-const usePostLayout = postLayout && siteConfig.toc.enable;
 ---
 
-<Layout title={title} banner={banner} description={description} lang={lang} image={image} postLayout={usePostLayout} noindex={noindex} noCanonical={noCanonical} setOGTypeArticle={setOGTypeArticle}>
+<Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle}>
 
 <!-- Navbar -->
 <slot slot="head" name="head"></slot>
@@ -95,7 +80,7 @@ const usePostLayout = postLayout && siteConfig.toc.enable;
             </a>}
 
 
-            <SideBar class="mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation"></SideBar>
+            <SideBar class="mb-4 row-start-2 row-end-3 col-span-2 lg:row-start-1 lg:row-end-2 lg:col-span-1 lg:max-w-[17.5rem] onload-animation" headings={headings}></SideBar>
 
             <main id="swup-container" class="transition-swup-fade col-span-2 lg:col-span-1 overflow-hidden">
                 <div id="content-wrapper" class="onload-animation">
@@ -108,87 +93,33 @@ const usePostLayout = postLayout && siteConfig.toc.enable;
                 </div>
             </main>
 
-            <!--
-                Table of contents.
-                Always rendered so that swup can replace `#toc` on every page (it is a swup container).
-                Visible only on post pages where `body.is-post-page` moves it into the right grid column.
-            -->
-            <aside id="toc-column" class="hidden lg:col-start-2 lg:row-start-1" aria-label={i18n(I18nKey.toc)}>
-                <div class="sticky top-4 flex flex-col gap-1">
-                    <div id="toc-inner-wrapper" class="max-h-[calc(100vh-6rem)] overflow-y-auto overflow-x-hidden hide-scrollbar">
-                        <div id="toc" class="w-full transition-swup-fade">
-                            <div class="h-2 w-full"></div>
-                            {siteConfig.toc.enable && <TOC headings={headings}></TOC>}
-                            <div class="h-2 w-full"></div>
-                        </div>
-                    </div>
-                    <button type="button" id="toc-back-to-top"
-                            onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
-                            class="btn-plain w-full h-9 rounded-lg text-sm gap-1.5 shrink-0">
-                        <Icon name="material-symbols:keyboard-arrow-up-rounded" class="text-[1.25rem]"></Icon>
-                        {i18n(I18nKey.backToTop)}
-                    </button>
-                </div>
-            </aside>
-
-            <div id="mobile-footer" class="footer col-span-2 onload-animation block lg:hidden">
+            <div class="footer col-span-2 onload-animation block lg:hidden">
                 <Footer></Footer>
             </div>
         </div>
 
-        <!-- Kept only as a fallback: with a TOC the "back to top" action lives inside the TOC. -->
-        {!siteConfig.toc.enable && <BackToTop></BackToTop>}
+        <BackToTop></BackToTop>
     </div>
 </div>
 
-<!-- Mobile table of contents (fixed bottom bar + sheet), only shown on post pages -->
-<MobileToc headings={headings} enabled={usePostLayout}></MobileToc>
+<!-- The things that should be under the banner, only the TOC for now -->
+<div class="absolute w-full z-0 hidden 2xl:block">
+    <div class="relative max-w-[var(--page-width)] mx-auto">
+        <!-- TOC component -->
+        {siteConfig.toc.enable && <div id="toc-wrapper" class:list={["hidden lg:block transition absolute top-0 -right-[var(--toc-width)] w-[var(--toc-width)] items-center",
+            {"toc-hide": siteConfig.banner.enable}]}
+        >
+            <div id="toc-inner-wrapper" class="fixed top-14 w-[var(--toc-width)] h-[calc(100vh_-_20rem)] overflow-y-scroll overflow-x-hidden hide-scrollbar">
+                <div id="toc" class="w-full h-full transition-swup-fade ">
+                    <div class="h-8 w-full"></div>
+                    <TOC headings={headings}></TOC>
+                    <div class="h-8 w-full"></div>
+                </div>
+            </div>
+        </div>}
 
-<style is:global>
-/* The TOC column and the mobile TOC are opt-in: only post pages display them. */
-#toc-column,
-#toc-mobile {
-    display: none;
-}
-
-/* On post pages the sidebar is dropped on every breakpoint (tags are shown in the article header). */
-body.is-post-page #sidebar {
-    display: none;
-}
-
-@media (min-width: 1024px) {
-    /* Post pages: put the TOC where the sidebar used to be, on the right.
-       The article keeps the exact same width as before (75rem - 17.5rem - 1rem gap). */
-    body.is-post-page #main-grid {
-        grid-template-columns: auto 17.5rem;
-    }
-    body.is-post-page #toc-column {
-        display: block;
-    }
-
-    /* Posts without headings have nothing to navigate: drop the TOC column
-       and keep the article at the same reading width, centered. */
-    body.is-post-page #main-grid:not(:has(#toc a)) {
-        grid-template-columns: auto;
-    }
-    body.is-post-page #main-grid:not(:has(#toc a)) #toc-column {
-        display: none;
-    }
-    body.is-post-page #main-grid:not(:has(#toc a)) #swup-container {
-        max-width: calc(var(--page-width) - 17.5rem - 1rem - 2rem);
-        margin-inline: auto;
-    }
-}
-
-@media (max-width: 1023.98px) {
-    body.is-post-page #toc-mobile {
-        display: block;
-    }
-    /* Leave room for the fixed TOC bar so it never covers the end of the article/comments/footer. */
-    body.is-post-page #content-wrapper,
-    body.is-post-page #mobile-footer {
-        padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
-    }
-}
-</style>
+        <!-- #toc needs to exist for Swup to work normally -->
+        {!siteConfig.toc.enable && <div id="toc"></div>}
+    </div>
+</div>
 </Layout>

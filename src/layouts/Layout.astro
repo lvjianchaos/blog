@@ -17,7 +17,7 @@ import {
 } from "../constants/constants";
 import { defaultFavicons } from "../constants/icon";
 import type { Favicon } from "../types/config";
-import { absoluteUrl, pathsEqual, url } from "../utils/url-utils";
+import { pathsEqual, url } from "../utils/url-utils";
 import "katex/dist/katex.css";
 
 interface Props {
@@ -25,24 +25,10 @@ interface Props {
 	banner?: string;
 	description?: string;
 	lang?: string;
-	image?: string;
-	postLayout?: boolean;
-	noindex?: boolean;
-	noCanonical?: boolean;
 	setOGTypeArticle?: boolean;
 }
 
-let {
-	title,
-	banner,
-	description,
-	lang,
-	image,
-	postLayout,
-	noindex = false,
-	noCanonical = false,
-	setOGTypeArticle,
-} = Astro.props;
+let { title, banner, description, lang, setOGTypeArticle } = Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 // Swup can update the body for each page visit, but it's after the page transition, causing a delay for banner height change
@@ -61,12 +47,6 @@ banner = siteConfig.banner.src;
 
 const enableBanner = siteConfig.banner.enable;
 
-/**
- * Social preview image: post cover when available, otherwise the site banner.
- * `og:image` requires an absolute URL, see `absoluteUrl`.
- */
-const ogImage = absoluteUrl(image) || absoluteUrl(siteConfig.banner.src) || "";
-
 let pageTitle: string;
 if (title) {
 	pageTitle = `${title} - ${siteConfig.title}`;
@@ -82,10 +62,6 @@ if (!lang) {
 	lang = `${siteConfig.lang}`;
 }
 const siteLang = lang.replace("_", "-");
-
-// Canonical URL: pathname only, so query-based archive filters point back to the canonical page.
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
-	.href;
 
 const bannerOffsetByPosition = {
 	top: `${BANNER_HEIGHT_EXTEND}vh`,
@@ -109,8 +85,7 @@ const bannerOffset =
 		<meta name="author" content={profileConfig.name}>
 
 		<meta property="og:site_name" content={siteConfig.title}>
-		{!noCanonical && <meta property="og:url" content={canonicalUrl} />}
-		<meta property="og:locale" content={siteLang.replace("-", "_")}>
+		<meta property="og:url" content={Astro.url}>
 		<meta property="og:title" content={pageTitle}>
 		<meta property="og:description" content={description || pageTitle}>
 		{setOGTypeArticle ? (
@@ -123,15 +98,9 @@ const bannerOffset =
 		<meta property="twitter:url" content={Astro.url}>
 		<meta name="twitter:title" content={pageTitle}>
 		<meta name="twitter:description" content={description || pageTitle}>
-		{ogImage && <meta property="og:image" content={ogImage} />}
-		{ogImage && <meta property="og:image:alt" content={pageTitle} />}
-		{ogImage && <meta property="twitter:image" content={ogImage} />}
-		{ogImage && <meta property="twitter:image:alt" content={pageTitle} />}
 
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		{!noCanonical && <link rel="canonical" href={canonicalUrl} />}
-		{noindex && <meta name="robots" content="noindex, follow" />}
 		{favicons.map(favicon => (
 			<link rel="icon"
 				  href={favicon.src.startsWith('/') ? url(favicon.src) : favicon.src}
@@ -179,7 +148,7 @@ const bannerOffset =
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
 	</head>
-	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner, "is-post-page": !!postLayout}]}
+	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
 		  data-overlayscrollbars-initialize
 	>
 		<ConfigCarrier></ConfigCarrier>
@@ -436,15 +405,6 @@ const setup = () => {
 		}
 	})
 	window.swup.hooks.on('content:replace', initCustomScrollbar)
-
-	// The 404 page is served for any unknown URL, so the target URL is not a reliable
-	// source of truth for the layout (e.g. `/posts/nope/` would look like a post page).
-	// Copy the class from the document that was actually returned instead.
-	window.swup.hooks.on('content:replace', (visit: { to?: { document?: Document } }) => {
-		const incomingBody = visit?.to?.document?.body
-		if (!incomingBody) return
-		document.body.classList.toggle('is-post-page', incomingBody.classList.contains('is-post-page'))
-	})
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')
@@ -453,12 +413,6 @@ const setup = () => {
 		} else {
 			bodyElement!.classList.remove('lg:is-home');
 		}
-
-		// post pages use a different grid (no sidebar, TOC on the right),
-		// the layout is switched with this body class because swup only replaces `main` and `#toc`.
-		const postPrefix = url('/posts/')
-		const toPath = new URL(visit.to.url, window.location.origin).pathname
-		bodyElement!.classList.toggle('is-post-page', toPath.startsWith(postPrefix))
 
 		// increase the page height during page transition to prevent the scrolling animation from jumping
 		const heightExtend = document.getElementById('page-height-extend')

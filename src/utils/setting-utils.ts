@@ -49,19 +49,6 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 		"data-theme",
 		expressiveCodeConfig.theme,
 	);
-
-	if (typeof window !== "undefined") {
-		window.dispatchEvent(
-			new CustomEvent("fuwari:theme-changed", {
-				detail: {
-					mode: theme,
-					resolvedTheme: document.documentElement.classList.contains("dark")
-						? DARK_MODE
-						: LIGHT_MODE,
-				},
-			}),
-		);
-	}
 }
 
 export function setTheme(theme: LIGHT_DARK_MODE): void {

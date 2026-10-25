@@ -1,19 +1,17 @@
 ---
 import path from "node:path";
-import GiscusComments from "@components/misc/GiscusComments.astro";
 import License from "@components/misc/License.astro";
 import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@utils/content-utils";
-import { summarize } from "@utils/text-utils";
-import { absoluteUrl, getDir, getPostUrlBySlug } from "@utils/url-utils";
+import { getDir, getPostUrlBySlug } from "@utils/url-utils";
 import { Icon } from "astro-icon/components";
 import { licenseConfig } from "src/config";
 import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
-import { giscusConfig, profileConfig, siteConfig } from "../../config";
+import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
 
 export async function getStaticPaths() {
@@ -25,18 +23,15 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content, headings, remarkPluginFrontmatter } = await entry.render();
+const { Content, headings } = await entry.render();
 
-// Posts without an explicit description fall back to the excerpt of their first paragraph.
-const postDescription = summarize(
-	entry.data.description || remarkPluginFrontmatter.excerpt || entry.data.title,
-);
+const { remarkPluginFrontmatter } = await entry.render();
 
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@type": "BlogPosting",
 	headline: entry.data.title,
-	description: postDescription,
+	description: entry.data.description || entry.data.title,
 	keywords: entry.data.tags,
 	author: {
 		"@type": "Person",
@@ -47,12 +42,10 @@ const jsonLd = {
 	inLanguage: entry.data.lang
 		? entry.data.lang.replace("_", "-")
 		: siteConfig.lang.replace("_", "-"),
-	...(absoluteUrl(entry.data.image)
-		? { image: absoluteUrl(entry.data.image) }
-		: {}),
+	// TODO include cover image here
 };
 ---
-<MainGridLayout banner={entry.data.image} title={entry.data.title} description={postDescription} lang={entry.data.lang} image={entry.data.image} postLayout={true} setOGTypeArticle={true} headings={headings}>
+<MainGridLayout banner={entry.data.image} title={entry.data.title} description={entry.data.description} lang={entry.data.lang} setOGTypeArticle={true} headings={headings}>
     <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mb-4">
         <div id="post-container" class:list={["card-base z-10 px-6 md:px-9 pt-6 pb-4 relative w-full ",
@@ -114,14 +107,6 @@ const jsonLd = {
             </Markdown>
 
             {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
-
-            {giscusConfig.enable && (
-                <GiscusComments
-                    title={i18n(I18nKey.comments)}
-                    showTitle={giscusConfig.showTitle}
-                    class="mb-6 rounded-xl onload-animation"
-                />
-            )}
 
         </div>
     </div>

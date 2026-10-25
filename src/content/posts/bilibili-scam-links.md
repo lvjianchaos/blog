@@ -1,10 +1,10 @@
 ---
-title: Starting from the "Scam Links" on Bilibili
+title: 从【B站诈骗链接】说去…
 published: 2026-03-15
 description: ''
-image: ''
-tags: ['bilibili','url','shortlink','bug']
-category: '技术笔记'
+image: 'https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/cover.webp'
+tags: ['Bilibili','链接诈骗']
+category: '技术观察'
 draft: false
 lang: 'zh-CN'
 ---
@@ -15,9 +15,9 @@ lang: 'zh-CN'
 
 ## 引言：关于“诈骗链接”
 
-在浏览 `BiliBili` 评论区时，常会发现 B 站的视频链接以标题的形式显现，如下图：
+在浏览 `BiliBili` 评论区时，常会发现 B 站的视频链接以标题的形式显现，如下图：image_1
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/bilibili诈骗链接说开去/videolinkwithtitle.webp" alt="视频链接显示标题示例" style="border-radius: 1em;"/>
+<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_1.webp" alt="视频链接显示标题示例" style="border-radius: 1em;"/>
 
 但会遇到点击的视频标题与跳转到的视频页标题不一致的现象，也就是我们所说的**诈骗链接**。具体情形可以从[二叉树树](https://space.bilibili.com/325903362)的视频中看到。
 
@@ -29,7 +29,7 @@ lang: 'zh-CN'
 
 以及漏洞的剖析：前端在渲染链接时，读取第一个合法 `BV` 号获取标题，在这里就是 `BV_X` 对应的标题，而点击会去跳转到原始的 `url`（包含`/../`），从而实际跳转到 `https://www.bilibili.com/video/BV_Y`。
 
-这样的解释固然合乎道理，但于我而言，我还想要了解更多——为什么会造成这样的结果呢？
+我总觉得还有什么没有搞清楚，还想要了解更多，所以就有了这篇折腾记录。
 
 下文就记录了我的一些探索的所得。
 
@@ -53,7 +53,7 @@ lang: 'zh-CN'
 
 1. `GET` 请求 `https://api.bilibili.com/x/v2/reply/wbi/main` 懒加载获取评论区明细
 
-   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/bilibili%E8%AF%88%E9%AA%97%E9%93%BE%E6%8E%A5%E8%AF%B4%E5%BC%80%E5%8E%BB/screenshot-of-the-reply-response.png" style="zoom: 67%;" />
+   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_2.webp" style="border-radius: 1em;"/>
 
 2. 评论主体通常在 `content` 中，**常见字段**包括：
 
@@ -138,7 +138,7 @@ lang: 'zh-CN'
 
 源码中有这样的一些**正则匹配**（已添加注释）：
 
-```js
+```js collapse={13-43}
 // 匹配B站AV号：匹配以AV/av/Av/aV开头，后面跟一串数字的格式（如AV123456、av7890）
 p = new RegExp("(AV|av|Av|aV)[0-9]+", "ug"), 
 
@@ -199,7 +199,7 @@ E = /(\d+#)?(\d+(:|：)){1,2}\d\d/g
 
 这个应该是 `jump_url` 命中后的标题选择的函数：
 
-```js
+```js collapse={13-68}
 L = function (t, e) {
     var r = e.pc_url
        , o = e.app_url_schema
@@ -289,7 +289,7 @@ var L = function (token, config) {
 
 上述的论述仍有不足之处，但能够分析出我们这一小节最开始的问题。就拿我们上面的截图作为案例：
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/bilibili%E8%AF%88%E9%AA%97%E9%93%BE%E6%8E%A5%E8%AF%B4%E5%BC%80%E5%8E%BB/screenshot-of-the-reply-response.png" style="zoom: 70%; border-radius: 1em" />
+<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_2.webp" style="border-radius: 1em;"/>
 
 - `message`是：
 
@@ -311,7 +311,7 @@ var L = function (token, config) {
 
 与我们的实际渲染相符：
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/bilibili%E8%AF%88%E9%AA%97%E9%93%BE%E6%8E%A5%E8%AF%B4%E5%BC%80%E5%8E%BB/example_render.png" alt="example_render" style="border-radius: 1em; zoom: 80%" />
+   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_3.webp" style="border-radius: 1em;"/>
 
 在这里为什么第一个 `BV号` 没有替换 `title`，是 `jump_url` 失效了吗？不然，是**切片结果不同**：
 
@@ -320,7 +320,7 @@ var L = function (token, config) {
 3. 后半段在后续分片中切出了独立 token：`BV1f...`，这时与 `jump_url` 的 key 精确匹配，所以能替换成标题。
 
 还有类似这样的：
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/bilibili%E8%AF%88%E9%AA%97%E9%93%BE%E6%8E%A5%E8%AF%B4%E5%BC%80%E5%8E%BB/example_2.png" alt="example_2" style="border-radius: 1em; zoom: 60%" />
+   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_4.webp" style="border-radius: 1em;"/>
 
 - `message`: "`https://www.bilibili.com/video/BV1fscqz9EHs/../BV12ecbz1EUZav116057901629925cv1035673329881579520`"
 - `jump_url` 仅有一个：
@@ -340,7 +340,7 @@ var L = function (token, config) {
 
 #### 补充：流程图与对应代码锚点
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/bilibili%E8%AF%88%E9%AA%97%E9%93%BE%E6%8E%A5%E8%AF%B4%E5%BC%80%E5%8E%BB/flowchart.png" alt="flowchart" style="border-radius: 1em" />
+   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_5.webp" style="border-radius: 1em;"/>
 
 1. 解析入口（`qv`）
 
@@ -396,7 +396,7 @@ https://www.bilibili.com/video/BV12ecbz1EUZ/?spm_id_from=333.999.0.0&vd_source=x
 
 可以缩短为：`https://b23.tv/X8QkDCP`
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/Images/note/bilibili%E8%AF%88%E9%AA%97%E9%93%BE%E6%8E%A5%E8%AF%B4%E5%BC%80%E5%8E%BB/shortlink-query.png" alt="shortlink-query" style="zoom:67%; border-radius:1em" />
+<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_6.webp" style="border-radius: 1em;"/>
 
 上图是短链接请求的结果，可见其核心是<u>一次 **302 重定向**，`Location` 字段即为原始的长地址</u>。
 
@@ -409,7 +409,7 @@ https://www.bilibili.com/video/BV12ecbz1EUZ/?spm_id_from=333.999.0.0&vd_source=x
 
 我们可以通过第三方的 [B站短链接生成工具](https://www.bilitools.top/t/4/) 来使用哔哩哔哩的短码服务，当然也可以通过  [B站的API](https://sessionhu.github.io/bilibili-API-collect/docs/misc/b23tv.html) 生成 b23.tv 短链，这里给出一个脚本代码：
 
-```python
+```python collapse={3-15,17-187,189-229}
 """
 b23_generator.py - Bilibili b23.tv 短链生成工具
 
@@ -675,7 +675,7 @@ if __name__ == "__main__":
 | 1998     | RFC 2396     | URI语法独立成规范，“U”从“通用”改为“统一”         |
 | **2005** | **RFC 3986** | **现行标准**，详细定义解析、规范化、相对引用规则 |
 
-**[RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986)**是里程碑式的。它明确要求：<u>任何符合标准的URI处理器，在解析路径时必须对</u> `.` <u>和</u> `..` <u>进行规范化处理</u>。这意味着：
+[RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986) 是里程碑式的。它明确要求：<u>任何符合标准的URI处理器，在解析路径时必须对</u> `.` <u>和</u> `..` <u>进行规范化处理</u>。这意味着：
 
 - 浏览器在发送请求前，必须规范化路径
 - 服务器在路由匹配前，必须规范化路径
@@ -795,7 +795,7 @@ console.log(normalized);
 > - 后端 `jump_url` 的计算逻辑，注意对 URL 进行规范化
 
 :::tip[😋]
-本文有些知识其实不需要大段论述，但实际上我就是为了这个“饺子”，才端出这个“B站诈骗链接”的“醋”喵~
+本文有些知识其实不需要大段论述，但实际上都是我探索过程中了解到的，所以一并写上了…
 :::
 
 ## 相关资料

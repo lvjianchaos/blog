@@ -1,10 +1,10 @@
 # 关于
 
-> 最后更新日期：2025年8月
+> 最后更新日期：2026年10月
 
 ## 关于网站
 
-本网站是一个静态网站，采用 [Fuwari](https://github.com/saicaca/fuwari) 框架构建，部署于 [Vercel](https://vercel.com/) 。
+本网站是一个静态网站，采用 [Astro](https://astro.build/) 框架 [Fuwari](https://github.com/saicaca/fuwari) 主题构建，部署于 [Vercel](https://vercel.com/) 。
 
 ::github{repo="lvjianchaos/blog"}
 
@@ -12,12 +12,11 @@
 
 **Chaos** - 人世几回伤往事，山形依旧枕寒流。
 
-我是一名来自江苏徐州的大三学生。就读于武汉理工大学，专业是计算机科学与技术。
+我是一名来自江苏徐州的大四学生，就读于武汉理工大学，专业是计算机科学与技术。
 
-- 👨‍💻 热衷于计算机科学与编程
-- 🔭 目前正深入探索Web开发（前/后端）
-- 🧠 追求解决算法问题的快感（[Codeforces](https://codeforces.com/), [Atcoder](https://atcoder.jp/) ,[Leetcode](https://leetcode.cn/), etc.）
-- 😄 ACGN爱好者，对历史、诗词、文学、西方哲学感兴趣
+我对各种计算机技术感兴趣，但主要掌握 Java 相关技术栈，正在深度探索 全栈开发 以及 AI Agent 开发。
+
+除了计算机相关的东西，我度热爱 ACGN，对历史、文学以及西方哲学也抱有很大兴趣。
 
 ---
 

@@ -42,20 +42,3 @@ export function getDir(path: string): string {
 export function url(path: string) {
 	return joinUrl("", import.meta.env.BASE_URL, path);
 }
-
-/**
- * Convert a path into an absolute URL, which is required by meta tags such as `og:image`.
- * External URLs are returned as-is; `/public` paths are resolved against the site URL.
- * Anything else (data URIs, `src`-relative asset paths) returns an empty string,
- * so callers can fall back to another image.
- */
-export function absoluteUrl(path: string | undefined): string {
-	if (!path) return "";
-	if (/^https?:\/\//i.test(path)) return path;
-	if (!path.startsWith("/")) return "";
-
-	const site = import.meta.env.SITE;
-	if (!site) return path;
-
-	return new URL(url(path), site).href;
-}

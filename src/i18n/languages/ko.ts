@@ -5,7 +5,6 @@ export const ko: Translation = {
 	[Key.home]: "홈",
 	[Key.about]: "소개",
 	[Key.archive]: "아카이브",
-	[Key.friends]: "친구",
 	[Key.search]: "검색",
 
 	[Key.tags]: "태그",
@@ -17,7 +16,6 @@ export const ko: Translation = {
 	[Key.untitled]: "제목 없음",
 	[Key.uncategorized]: "분류되지 않음",
 	[Key.noTags]: "태그 없음",
-	[Key.noFriends]: "아직 친구가 없습니다",
 
 	[Key.wordCount]: "단어",
 	[Key.wordsCount]: "단어",
@@ -33,10 +31,6 @@ export const ko: Translation = {
 	[Key.systemMode]: "시스템 모드",
 
 	[Key.more]: "더 보기",
-	[Key.toc]: "목차",
-	[Key.backToTop]: "맨 위로",
-	[Key.notFound]: "페이지를 찾을 수 없습니다",
-	[Key.notFoundDesc]: "찾으시는 페이지가 이동되었거나 삭제되었을 수 있습니다.",
 
 	[Key.author]: "저자",
 	[Key.publishedAt]: "게시일",

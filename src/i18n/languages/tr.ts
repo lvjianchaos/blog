@@ -5,7 +5,6 @@ export const tr: Translation = {
 	[Key.home]: "Anasayfa",
 	[Key.about]: "Hakkında",
 	[Key.archive]: "Arşiv",
-	[Key.friends]: "Arkadaşlar",
 	[Key.search]: "Ara",
 
 	[Key.tags]: "Taglar",
@@ -17,7 +16,6 @@ export const tr: Translation = {
 	[Key.untitled]: "Başlıksız",
 	[Key.uncategorized]: "Katagorisiz",
 	[Key.noTags]: "Tag Bulunamadı",
-	[Key.noFriends]: "Henüz arkadaş yok",
 
 	[Key.wordCount]: "kelime",
 	[Key.wordsCount]: "kelime",
@@ -33,10 +31,6 @@ export const tr: Translation = {
 	[Key.systemMode]: "Sistem",
 
 	[Key.more]: "Daha Fazla",
-	[Key.toc]: "İçindekiler",
-	[Key.backToTop]: "Başa dön",
-	[Key.notFound]: "Sayfa bulunamadı",
-	[Key.notFoundDesc]: "Aradığınız sayfa taşınmış veya silinmiş olabilir.",
 
 	[Key.author]: "Yazar",
 	[Key.publishedAt]: "Yayınlanma:",

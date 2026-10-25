@@ -5,7 +5,6 @@ export const th: Translation = {
 	[Key.home]: "หน้าแรก",
 	[Key.about]: "เกี่ยวกับ",
 	[Key.archive]: "คลัง",
-	[Key.friends]: "เพื่อน",
 	[Key.search]: "ค้นหา",
 
 	[Key.tags]: "ป้ายกำกับ",
@@ -17,7 +16,6 @@ export const th: Translation = {
 	[Key.untitled]: "ไม่ได้ตั้งชื่อ",
 	[Key.uncategorized]: "ไม่ได้จัดหมวดหมู่",
 	[Key.noTags]: "ไม่มีป้ายกำกับ",
-	[Key.noFriends]: "ยังไม่มีเพื่อน",
 
 	[Key.wordCount]: "คำ",
 	[Key.wordsCount]: "คำ",
@@ -33,10 +31,6 @@ export const th: Translation = {
 	[Key.systemMode]: "ตามระบบ",
 
 	[Key.more]: "ดูเพิ่ม",
-	[Key.toc]: "สารบัญ",
-	[Key.backToTop]: "กลับไปด้านบน",
-	[Key.notFound]: "ไม่พบหน้านี้",
-	[Key.notFoundDesc]: "หน้าที่คุณกำลังมองหาอาจถูกย้ายหรือลบไปแล้ว",
 
 	[Key.author]: "ผู้เขียน",
 	[Key.publishedAt]: "เผยแพร่เมื่อ",

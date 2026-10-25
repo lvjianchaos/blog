@@ -48,7 +48,6 @@ export enum LinkPreset {
 	Home = 0,
 	Archive = 1,
 	About = 2,
-	Friends = 3,
 }
 
 export type NavBarLink = {
@@ -100,23 +99,4 @@ export type BlogPostData = {
 
 export type ExpressiveCodeConfig = {
 	theme: string;
-	codeFold?: {
-		minLines: number;
-	};
-};
-
-export type GiscusConfig = {
-	enable: boolean;
-	showTitle: boolean;
-	repo: string;
-	repoId: string;
-	category: string;
-	categoryId: string;
-	mapping: "pathname";
-	strict: "0" | "1";
-	reactionsEnabled: "0" | "1";
-	emitMetadata: "0" | "1";
-	inputPosition: "top" | "bottom";
-	lang: "zh-CN";
-	loading: "lazy" | "eager";
 };

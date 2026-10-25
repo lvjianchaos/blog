@@ -5,7 +5,6 @@ export const vi: Translation = {
 	[Key.home]: "Trang chủ",
 	[Key.about]: "Giới thiệu",
 	[Key.archive]: "Kho bài",
-	[Key.friends]: "Bạn bè",
 	[Key.search]: "Tìm kiếm",
 
 	[Key.tags]: "Thẻ",
@@ -17,7 +16,6 @@ export const vi: Translation = {
 	[Key.untitled]: "Không tiêu đề",
 	[Key.uncategorized]: "Chưa phân loại",
 	[Key.noTags]: "Chưa có thẻ",
-	[Key.noFriends]: "Chưa có bạn bè",
 
 	[Key.wordCount]: "từ",
 	[Key.wordsCount]: "từ",
@@ -33,10 +31,6 @@ export const vi: Translation = {
 	[Key.systemMode]: "Hệ thống",
 
 	[Key.more]: "Thêm",
-	[Key.toc]: "Mục lục",
-	[Key.backToTop]: "Về đầu trang",
-	[Key.notFound]: "Không tìm thấy trang",
-	[Key.notFoundDesc]: "Trang bạn tìm có thể đã được di chuyển hoặc xóa.",
 
 	[Key.author]: "Tác giả",
 	[Key.publishedAt]: "Đăng vào lúc",

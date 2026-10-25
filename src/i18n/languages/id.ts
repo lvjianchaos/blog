@@ -5,7 +5,6 @@ export const id: Translation = {
 	[Key.home]: "Beranda",
 	[Key.about]: "Tentang",
 	[Key.archive]: "Arsip",
-	[Key.friends]: "Teman",
 	[Key.search]: "Cari",
 
 	[Key.tags]: "Tag",
@@ -17,7 +16,6 @@ export const id: Translation = {
 	[Key.untitled]: "Tanpa Judul",
 	[Key.uncategorized]: "Tanpa Kategori",
 	[Key.noTags]: "Tanpa Tag",
-	[Key.noFriends]: "Belum ada teman",
 
 	[Key.wordCount]: "kata",
 	[Key.wordsCount]: "kata",
@@ -33,11 +31,6 @@ export const id: Translation = {
 	[Key.systemMode]: "Sistem",
 
 	[Key.more]: "Lainnya",
-	[Key.toc]: "Daftar Isi",
-	[Key.backToTop]: "Kembali ke atas",
-	[Key.notFound]: "Halaman tidak ditemukan",
-	[Key.notFoundDesc]:
-		"Halaman yang Anda cari mungkin telah dipindahkan atau dihapus.",
 
 	[Key.author]: "Penulis",
 	[Key.publishedAt]: "Diterbitkan pada",

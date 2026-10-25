@@ -5,7 +5,6 @@ export const es: Translation = {
 	[Key.home]: "Inicio",
 	[Key.about]: "Sobre mí",
 	[Key.archive]: "Archivo",
-	[Key.friends]: "Amigos",
 	[Key.search]: "Buscar",
 
 	[Key.tags]: "Etiquetas",
@@ -17,7 +16,6 @@ export const es: Translation = {
 	[Key.untitled]: "Sin título",
 	[Key.uncategorized]: "Sin categoría",
 	[Key.noTags]: "Sin etiquetas",
-	[Key.noFriends]: "Aún no hay amigos",
 
 	[Key.wordCount]: "palabra",
 	[Key.wordsCount]: "palabras",
@@ -33,11 +31,6 @@ export const es: Translation = {
 	[Key.systemMode]: "Sistema",
 
 	[Key.more]: "Más",
-	[Key.toc]: "Índice",
-	[Key.backToTop]: "Volver arriba",
-	[Key.notFound]: "Página no encontrada",
-	[Key.notFoundDesc]:
-		"La página que buscas puede haber sido movida o eliminada.",
 
 	[Key.author]: "Autor",
 	[Key.publishedAt]: "Publicado el",
