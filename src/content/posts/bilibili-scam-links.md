@@ -2,7 +2,7 @@
 title: 从【B站诈骗链接】说去…
 published: 2026-03-15
 description: ''
-image: 'https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/cover.webp'
+image: ''
 tags: ['Bilibili','链接诈骗']
 category: '技术观察'
 draft: false
@@ -15,7 +15,7 @@ lang: 'zh-CN'
 
 ## 引言：关于“诈骗链接”
 
-在浏览 `BiliBili` 评论区时，常会发现 B 站的视频链接以标题的形式显现，如下图：image_1
+在浏览 `BiliBili` 评论区时，常会发现 B 站的视频链接以标题的形式显现，如下图：
 
 <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_1.webp" alt="视频链接显示标题示例" style="border-radius: 1em;"/>
 
