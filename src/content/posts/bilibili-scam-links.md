@@ -17,7 +17,7 @@ lang: 'zh-CN'
 
 在浏览 `BiliBili` 评论区时，常会发现 B 站的视频链接以标题的形式显现，如下图：
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_1.webp" alt="视频链接显示标题示例" style="border-radius: 1em;"/>
+<img src="https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_1.webp" alt="视频链接显示标题示例" style="border-radius: 1em;"/>
 
 但会遇到点击的视频标题与跳转到的视频页标题不一致的现象，也就是我们所说的**诈骗链接**。具体情形可以从[二叉树树](https://space.bilibili.com/325903362)的视频中看到。
 
@@ -53,7 +53,7 @@ lang: 'zh-CN'
 
 1. `GET` 请求 `https://api.bilibili.com/x/v2/reply/wbi/main` 懒加载获取评论区明细
 
-   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_2.webp" style="border-radius: 1em;"/>
+   <img src="https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_2.webp" style="border-radius: 1em;"/>
 
 2. 评论主体通常在 `content` 中，**常见字段**包括：
 
@@ -289,7 +289,7 @@ var L = function (token, config) {
 
 上述的论述仍有不足之处，但能够分析出我们这一小节最开始的问题。就拿我们上面的截图作为案例：
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_2.webp" style="border-radius: 1em;"/>
+<img src="https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_2.webp" style="border-radius: 1em;"/>
 
 - `message`是：
 
@@ -311,7 +311,7 @@ var L = function (token, config) {
 
 与我们的实际渲染相符：
 
-   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_3.webp" style="border-radius: 1em;"/>
+   <img src="https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_3.webp" style="border-radius: 1em;"/>
 
 在这里为什么第一个 `BV号` 没有替换 `title`，是 `jump_url` 失效了吗？不然，是**切片结果不同**：
 
@@ -320,7 +320,7 @@ var L = function (token, config) {
 3. 后半段在后续分片中切出了独立 token：`BV1f...`，这时与 `jump_url` 的 key 精确匹配，所以能替换成标题。
 
 还有类似这样的：
-   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_4.webp" style="border-radius: 1em;"/>
+   <img src="https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_4.webp" style="border-radius: 1em;"/>
 
 - `message`: "`https://www.bilibili.com/video/BV1fscqz9EHs/../BV12ecbz1EUZav116057901629925cv1035673329881579520`"
 - `jump_url` 仅有一个：
@@ -340,7 +340,7 @@ var L = function (token, config) {
 
 #### 补充：流程图与对应代码锚点
 
-   <img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_5.webp" style="border-radius: 1em;"/>
+   <img src="https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_5.webp" style="border-radius: 1em;"/>
 
 1. 解析入口（`qv`）
 
@@ -396,7 +396,7 @@ https://www.bilibili.com/video/BV12ecbz1EUZ/?spm_id_from=333.999.0.0&vd_source=x
 
 可以缩短为：`https://b23.tv/X8QkDCP`
 
-<img src="https://cdn.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_6.webp" style="border-radius: 1em;"/>
+<img src="https://gcore.jsdelivr.net/gh/lvjianchaos/image-host@main/blog/posts/bilibili-scam-links/image_6.webp" style="border-radius: 1em;"/>
 
 上图是短链接请求的结果，可见其核心是<u>一次 **302 重定向**，`Location` 字段即为原始的长地址</u>。
 
