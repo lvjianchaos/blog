@@ -6,6 +6,8 @@
 
 本网站是一个静态网站，采用 [Astro](https://astro.build/) 框架 [Fuwari](https://github.com/saicaca/fuwari) 主题构建，部署于 [Vercel](https://vercel.com/) 。
 
+并包含一个分站 [CHAO·IO](https://io.chaos-ljc.top)，分站主要分享我通过各种渠道学习（输入）总结的笔记（输出）等。
+
 ::github{repo="lvjianchaos/blog"}
 
 ## 关于我
